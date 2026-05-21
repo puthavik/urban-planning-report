@@ -4,303 +4,225 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Urban Design &amp; City Planning: Bangkok's Future Roadmap</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg: #fafaf9; --bg-card: #ffffff; --bg-sidebar: #ffffff;
-  --text: #1c1917; --text-muted: #78716c; --text-sidebar: #57534e;
-  --border: #e7e5e4;
-  --accent: #15803d; --accent-light: #dcfce7; --accent-dark: #166534;
-  --blue: #2563eb; --blue-light: #dbeafe;
-  --orange: #ea580c; --orange-light: #ffedd5;
-  --purple: #7c3aed; --purple-light: #ede9fe;
-  --red: #dc2626; --red-light: #fee2e2;
-  --green: #16a34a;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
-  --radius: 12px;
-  --sidebar-w: 320px;
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --bg:#fafaf9;--bg-card:#fff;--bg-sidebar:#fff;
+  --text:#1c1917;--text-muted:#78716c;--text-sidebar:#57534e;
+  --border:#e7e5e4;
+  --green:#15803d;--green-light:#dcfce7;--green-dark:#166534;
+  --blue:#2563eb;--blue-light:#dbeafe;
+  --orange:#ea580c;--orange-light:#ffedd5;
+  --purple:#7c3aed;--purple-light:#ede9fe;
+  --red:#dc2626;--red-light:#fee2e2;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,0.08),0 4px 6px -4px rgba(0,0,0,0.05);
+  --radius:12px;--sidebar-w:320px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
-[data-theme="dark"] {
-  --bg: #0c0a09; --bg-card: #1c1917; --bg-sidebar: #1c1917;
-  --text: #f5f5f4; --text-muted: #a8a29e; --text-sidebar: #a8a29e;
-  --border: #292524;
-  --accent-light: #052e16; --blue-light: #1e1b4b;
-  --orange-light: #431401; --purple-light: #2e1065; --red-light: #450a0a;
-  --shadow: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+[data-theme="dark"]{
+  --bg:#0c0a09;--bg-card:#1c1917;--bg-sidebar:#1c1917;
+  --text:#f5f5f4;--text-muted:#a8a29e;--text-sidebar:#a8a29e;
+  --border:#292524;
+  --green-light:#052e16;--blue-light:#1e1b4b;
+  --orange-light:#431401;--purple-light:#2e1065;--red-light:#450a0a;
+  --shadow:0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,0.4);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 20px; }
-body {
-  font-family: var(--font); background: var(--bg); color: var(--text);
-  line-height: 1.7; font-size: 16px;
-  transition: background 0.3s, color 0.3s;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s}
 
 /* Sidebar */
-.sidebar {
-  position: fixed; top: 0; left: 0; bottom: 0;
-  width: var(--sidebar-w); background: var(--bg-sidebar);
-  border-right: 1px solid var(--border); overflow-y: auto;
-  z-index: 100; padding: 24px 0;
-  transition: background 0.3s, transform 0.3s;
-}
-.sidebar-brand { padding: 0 24px; margin-bottom: 8px; }
-.sidebar-brand h2 {
-  font-size: 15px; font-weight: 700; color: var(--accent);
-  letter-spacing: -0.02em; line-height: 1.3;
-}
-.sidebar-brand span {
-  font-size: 10px; color: var(--text-muted); text-transform: uppercase;
-  letter-spacing: 0.08em; font-weight: 600;
-}
-.sidebar-nav { padding: 8px 12px; }
-.nav-section { margin-bottom: 4px; }
-.nav-section-title {
-  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--text-muted); font-weight: 700; padding: 12px 12px 4px;
-}
-.nav-link {
-  display: block; padding: 5px 12px; font-size: 13px;
-  color: var(--text-sidebar); text-decoration: none;
-  border-radius: 6px; transition: all 0.15s; cursor: pointer; line-height: 1.4;
-}
-.nav-link:hover { background: var(--accent-light); color: var(--accent); }
-.nav-link.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
-.nav-sub { padding-left: 12px; }
-.nav-sub .nav-link { font-size: 12px; padding: 3px 12px; }
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--bg-sidebar);border-right:1px solid var(--border);overflow-y:auto;z-index:100;padding:24px 0;transition:background .3s,transform .3s}
+.sidebar-brand{padding:0 24px;margin-bottom:8px}
+.sidebar-brand h2{font-size:15px;font-weight:700;color:var(--green);letter-spacing:-.02em;line-height:1.3}
+.sidebar-brand span{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.sidebar-nav{padding:8px 12px}
+.nav-section{margin-bottom:4px}
+.nav-section-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:700;padding:12px 12px 4px}
+.nav-link{display:block;padding:5px 12px;font-size:13px;color:var(--text-sidebar);text-decoration:none;border-radius:6px;transition:all .15s;cursor:pointer;line-height:1.4}
+.nav-link:hover{background:var(--green-light);color:var(--green)}
+.nav-link.active{background:var(--green-light);color:var(--green);font-weight:600}
+.nav-sub{padding-left:12px}
+.nav-sub .nav-link{font-size:12px;padding:3px 12px}
 
 /* Main */
-.main { margin-left: var(--sidebar-w); min-height: 100vh; }
-
-/* Topbar */
-.topbar {
-  position: sticky; top: 0; z-index: 50;
-  background: var(--bg); border-bottom: 1px solid var(--border);
-  padding: 12px 40px; display: flex; align-items: center;
-  justify-content: space-between; backdrop-filter: blur(8px);
-  transition: background 0.3s;
-}
-.topbar-left { display: flex; align-items: center; gap: 12px; }
-.menu-btn {
-  display: none; background: none; border: none; color: var(--text);
-  font-size: 20px; cursor: pointer; padding: 4px;
-}
-.breadcrumb { font-size: 13px; color: var(--text-muted); }
-.breadcrumb span { color: var(--text); font-weight: 600; }
-.topbar-actions { display: flex; gap: 8px; }
-.icon-btn {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 8px; padding: 6px 10px; cursor: pointer;
-  font-size: 14px; color: var(--text); transition: all 0.15s;
-  display: flex; align-items: center; gap: 4px;
-}
-.icon-btn:hover { border-color: var(--accent); }
-
-/* Content */
-.content { max-width: 900px; margin: 0 auto; padding: 40px; }
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 40px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(8px);transition:background .3s}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.menu-btn{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:4px}
+.breadcrumb{font-size:13px;color:var(--text-muted)}
+.breadcrumb span{color:var(--text);font-weight:600}
+.topbar-actions{display:flex;gap:8px}
+.icon-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px;color:var(--text);transition:all .15s;display:flex;align-items:center;gap:4px}
+.icon-btn:hover{border-color:var(--green)}
+.content{max-width:960px;margin:0 auto;padding:40px}
 
 /* Hero */
-.hero {
-  background: linear-gradient(135deg, #15803d 0%, #166534 50%, #064e3b 100%);
-  border-radius: 16px; padding: 48px; margin-bottom: 32px;
-  color: white; position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm-16 0v-4H18v4h-4v2h4v4h2v-4h4v-2H20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.hero-content { position: relative; z-index: 1; }
-.hero h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 12px; }
-.hero p { font-size: 17px; opacity: 0.9; max-width: 600px; line-height: 1.6; }
-.hero-meta { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
-.hero-stat {
-  background: rgba(255,255,255,0.15); border-radius: 10px;
-  padding: 16px 20px; min-width: 140px; backdrop-filter: blur(4px);
-}
-.hero-stat .number { font-size: 28px; font-weight: 800; display: block; }
-.hero-stat .label { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.05em; }
+.hero{background:linear-gradient(135deg,#15803d 0%,#166534 50%,#064e3b 100%);border-radius:16px;padding:48px;margin-bottom:32px;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm-16 0v-4H18v4h-4v2h4v4h2v-4h4v-2H20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-content{position:relative;z-index:1}
+.hero h1{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-bottom:12px}
+.hero p{font-size:17px;opacity:.9;max-width:600px;line-height:1.6}
+.hero-meta{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap}
+.hero-stat{background:rgba(255,255,255,.15);border-radius:10px;padding:16px 20px;min-width:140px;backdrop-filter:blur(4px)}
+.hero-stat .number{font-size:28px;font-weight:800;display:block}
+.hero-stat .label{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:.05em}
 
 /* Section */
-.section { margin-bottom: 48px; }
-.section-anchor { display: block; margin-top: -40px; visibility: hidden; }
-.section-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border);
-}
-.section-icon {
-  width: 40px; height: 40px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
-}
-.section-header h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
-.section-header .badge {
-  font-size: 11px; padding: 3px 10px; border-radius: 20px;
-  font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-}
+.section{margin-bottom:48px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.section-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.section-header h2{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+.section-header .badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 
-/* Card */
-.card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px; margin-bottom: 16px;
-  box-shadow: var(--shadow); transition: all 0.2s;
-}
-.card:hover { box-shadow: var(--shadow-lg); }
-.card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.01em; }
-.card p { color: var(--text-muted); margin-bottom: 8px; font-size: 15px; }
-.card p:last-child { margin-bottom: 0; }
+/* Stat Cards */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:20px 0}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow);transition:all .2s}
+.stat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.stat-card .stat-value{font-size:32px;font-weight:800;letter-spacing:-.02em;display:block;margin-bottom:4px}
+.stat-card .stat-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.stat-card .stat-context{font-size:12px;color:var(--text-muted);margin-top:4px;display:block}
+.stat-card.green .stat-value{color:var(--green)}
+.stat-card.blue .stat-value{color:var(--blue)}
+.stat-card.orange .stat-value{color:var(--orange)}
+.stat-card.red .stat-value{color:var(--red)}
+.stat-card.purple .stat-value{color:var(--purple)}
+
+/* Progress Bars */
+.progress-item{margin-bottom:16px}
+.progress-header{display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px}
+.progress-label{font-weight:600}
+.progress-value{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:13px}
+.progress-track{height:10px;background:var(--border);border-radius:5px;overflow:hidden}
+.progress-fill{height:100%;border-radius:5px;transition:width .5s}
+
+/* Comparison Bars */
+.comp-bar-group{margin:16px 0}
+.comp-bar-row{display:flex;align-items:center;margin-bottom:12px;gap:12px}
+.comp-bar-label{width:100px;font-size:13px;font-weight:600;text-align:right;flex-shrink:0}
+.comp-bar-track{flex:1;height:28px;background:var(--border);border-radius:6px;overflow:hidden;display:flex;position:relative}
+.comp-bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:700;color:#fff;transition:width .5s}
+.comp-bar-val{font-size:12px;font-weight:700;min-width:60px;text-align:left}
+
+/* Charts */
+.chart-container{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.chart-container canvas{max-height:300px}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.chart-row{grid-template-columns:1fr}}
 
 /* Collapsible */
-.collapsible {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); margin-bottom: 12px;
-  overflow: hidden; box-shadow: var(--shadow); transition: all 0.2s;
-}
-.collapsible-header {
-  padding: 16px 20px; cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between;
-  font-weight: 600; font-size: 15px; user-select: none;
-  transition: background 0.15s;
-}
-.collapsible-header:hover { background: var(--accent-light); }
-.collapsible-header .chevron { transition: transform 0.2s; font-size: 12px; color: var(--text-muted); }
-.collapsible.open .collapsible-header .chevron { transform: rotate(180deg); }
-.collapsible-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-.collapsible.open .collapsible-body { max-height: 10000px; }
-.collapsible-body-inner { padding: 0 20px 20px; font-size: 15px; line-height: 1.7; }
-.collapsible-body-inner p { margin-bottom: 12px; color: var(--text-muted); }
-.collapsible-body-inner p:last-child { margin-bottom: 0; }
-.collapsible-body-inner strong { color: var(--text); }
-.collapsible-body-inner ul, .collapsible-body-inner ol { margin: 8px 0 16px 20px; color: var(--text-muted); }
-.collapsible-body-inner li { margin-bottom: 4px; }
-.collapsible-body-inner table { margin: 12px 0; }
+.collapsible{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow);transition:all .2s}
+.collapsible-header{padding:14px 20px;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;font-weight:600;font-size:15px;user-select:none;transition:background .15s;gap:12px}
+.collapsible-header:hover{background:var(--green-light)}
+.collapsible-header .chevron{transition:transform .2s;font-size:12px;color:var(--text-muted);flex-shrink:0;margin-top:2px}
+.collapsible.open .collapsible-header .chevron{transform:rotate(180deg)}
+.collapsible-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.collapsible.open .collapsible-body{max-height:10000px}
+.collapsible-body-inner{padding:0 20px 20px;font-size:15px;line-height:1.7}
+.collapsible-body-inner p{margin-bottom:12px;color:var(--text-muted)}
+.collapsible-body-inner p:last-child{margin-bottom:0}
+.collapsible-body-inner strong{color:var(--text)}
+.collapsible-body-inner ul,.collapsible-body-inner ol{margin:8px 0 16px 20px;color:var(--text-muted)}
+.collapsible-body-inner li{margin-bottom:4px}
+.collapsible-preview{font-size:13px;color:var(--text-muted);font-weight:400;padding:6px 0;border-top:1px solid var(--border);margin-top:6px}
 
-/* Comparison */
-.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
-.comparison-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
-}
-.comparison-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.comparison-card .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-.metric-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px;
-}
-.metric-row:last-child { border-bottom: none; }
-.metric-label { color: var(--text-muted); }
-.metric-value { font-weight: 700; font-family: var(--mono); font-size: 13px; }
+/* Severity Tags */
+.severity{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-left:8px;vertical-align:middle}
+.sev-critical{background:var(--red-light);color:var(--red)}
+.sev-warning{background:var(--orange-light);color:var(--orange)}
+.sev-moderate{background:var(--blue-light);color:var(--blue)}
+.sev-info{background:var(--green-light);color:var(--green)}
 
 /* Callout */
-.callout {
-  border-radius: var(--radius); padding: 16px 20px; margin: 16px 0;
-  font-size: 14px; display: flex; gap: 12px; align-items: flex-start;
-}
-.callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-.callout-green { background: var(--accent-light); border: 1px solid #86efac; color: #166534; }
-.callout-blue { background: var(--blue-light); border: 1px solid #93c5fd; color: #1e40af; }
-.callout-orange { background: var(--orange-light); border: 1px solid #fdba74; color: #9a3412; }
-.callout-red { background: var(--red-light); border: 1px solid #fca5a5; color: #991b1b; }
-.callout-purple { background: var(--purple-light); border: 1px solid #c4b5fd; color: #5b21b6; }
-[data-theme="dark"] .callout-green { color: #86efac; }
-[data-theme="dark"] .callout-blue { color: #93c5fd; }
-[data-theme="dark"] .callout-orange { color: #fdba74; }
-[data-theme="dark"] .callout-red { color: #fca5a5; }
-[data-theme="dark"] .callout-purple { color: #c4b5fd; }
+.callout{border-radius:var(--radius);padding:16px 20px;margin:16px 0;font-size:14px;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.callout-green{background:var(--green-light);border:1px solid #86efac;color:#166534}
+.callout-blue{background:var(--blue-light);border:1px solid #93c5fd;color:#1e40af}
+.callout-orange{background:var(--orange-light);border:1px solid #fdba74;color:#9a3412}
+.callout-red{background:var(--red-light);border:1px solid #fca5a5;color:#991b1b}
+.callout-purple{background:var(--purple-light);border:1px solid #c4b5fd;color:#5b21b6}
+[data-theme="dark"] .callout-green{color:#86efac}
+[data-theme="dark"] .callout-blue{color:#93c5fd}
+[data-theme="dark"] .callout-orange{color:#fdba74}
+[data-theme="dark"] .callout-red{color:#fca5a5}
+[data-theme="dark"] .callout-purple{color:#c4b5fd}
+
+/* TL;DR */
+.tldr{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:16px 0;box-shadow:var(--shadow)}
+.tldr-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--text-muted);margin-bottom:8px}
+.tldr ul{list-style:none;padding:0}
+.tldr li{padding:4px 0;font-size:14px;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px}
+.tldr li::before{content:'\2713';color:var(--green);font-weight:700;flex-shrink:0}
 
 /* Table */
-.table-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius); border: 1px solid var(--border); }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th {
-  background: var(--bg); font-weight: 700; text-align: left;
-  padding: 12px 16px; border-bottom: 2px solid var(--border);
-  font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
-}
-td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--accent-light); }
+.table-wrap{overflow-x:auto;margin:16px 0;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:var(--bg);font-weight:700;text-align:left;padding:12px 16px;border-bottom:2px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)}
+td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--green-light)}
 
-/* Rec cards */
-.rec-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow);
-  border-left: 4px solid var(--accent); margin-bottom: 16px;
-}
-.rec-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-.rec-card .priority { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
-.priority-high { background: var(--red-light); color: var(--red); }
-.priority-medium { background: var(--orange-light); color: var(--orange); }
-.priority-long { background: var(--blue-light); color: var(--blue); }
-.rec-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-.rec-card ul { margin: 8px 0 0 20px; font-size: 14px; color: var(--text-muted); }
-.rec-card li { margin-bottom: 4px; }
+/* Recommendation Timeline */
+.timeline{position:relative;padding:20px 0;margin:24px 0}
+.timeline::before{content:'';position:absolute;left:28px;top:0;bottom:0;width:3px;background:var(--border)}
+.timeline-item{position:relative;padding-left:60px;margin-bottom:24px}
+.timeline-dot{position:absolute;left:16px;top:4px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;z-index:1}
+.timeline-dot.high{background:var(--red)}
+.timeline-dot.medium{background:var(--orange)}
+.timeline-dot.long{background:var(--blue)}
+.timeline-content{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.timeline-content h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.timeline-content p{font-size:14px;color:var(--text-muted);line-height:1.6}
+.timeline-content ul{margin:8px 0 0 20px;font-size:14px;color:var(--text-muted)}
+.timeline-content li{margin-bottom:4px}
+.timeline-phase{font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-bottom:4px}
+.timeline-phase.now{color:var(--red)}
+.timeline-phase.soon{color:var(--orange)}
+.timeline-phase.later{color:var(--blue)}
 
 /* Search */
-.search-box { padding: 0 12px; margin-bottom: 8px; }
-.search-input {
-  width: 100%; padding: 8px 12px; border: 1px solid var(--border);
-  border-radius: 8px; font-size: 13px; background: var(--bg);
-  color: var(--text); font-family: var(--font); outline: none; transition: border-color 0.15s;
-}
-.search-input:focus { border-color: var(--accent); }
-.search-input::placeholder { color: var(--text-muted); }
-
-/* Footer */
-.footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); margin-top: 40px; }
-
-/* Overlay */
-.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; }
-
-/* Responsive */
-@media (max-width: 900px) {
-  .sidebar { transform: translateX(-100%); }
-  .sidebar.open { transform: translateX(0); }
-  .sidebar-overlay.open { display: block; }
-  .main { margin-left: 0; }
-  .menu-btn { display: block; }
-  .content { padding: 24px 16px; }
-  .hero { padding: 32px 24px; }
-  .hero h1 { font-size: 28px; }
-  .comparison { grid-template-columns: 1fr; }
-  .hero-meta { gap: 12px; }
-  .hero-stat { min-width: 120px; padding: 12px 16px; }
-  .hero-stat .number { font-size: 22px; }
-  .topbar { padding: 12px 16px; }
-}
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-@media print {
-  .sidebar, .topbar { display: none; }
-  .main { margin-left: 0; }
-  .collapsible-body { max-height: none !important; }
-  .content { max-width: 100%; }
-}
+.search-box{padding:0 12px;margin-bottom:8px}
+.search-input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);font-family:var(--font);outline:none;transition:border-color .15s}
+.search-input:focus{border-color:var(--green)}
+.search-input::placeholder{color:var(--text-muted)}
 
 /* Controls */
-.controls-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
-.expand-btn {
-  font-size: 12px; padding: 4px 12px; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: 6px; cursor: pointer;
-  color: var(--text-muted); transition: all 0.15s;
-}
-.expand-btn:hover { border-color: var(--accent); color: var(--accent); }
+.controls-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.expand-btn{font-size:12px;padding:4px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;cursor:pointer;color:var(--text-muted);transition:all .15s}
+.expand-btn:hover{border-color:var(--green);color:var(--green)}
+
+/* Footer */
+.footer{text-align:center;padding:40px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
 
 /* Progress indicator */
-.reading-progress {
-  position: fixed; top: 0; left: var(--sidebar-w); right: 0; height: 3px;
-  background: transparent; z-index: 60;
+.reading-progress{position:fixed;top:0;left:var(--sidebar-w);right:0;height:3px;background:transparent;z-index:60}
+.reading-progress-bar{height:100%;background:var(--green);width:0%;transition:width .1s}
+
+/* Responsive */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{margin-left:0}
+  .menu-btn{display:block}
+  .content{padding:24px 16px}
+  .hero{padding:32px 24px}
+  .hero h1{font-size:28px}
+  .chart-row{grid-template-columns:1fr}
+  .hero-meta{gap:12px}
+  .hero-stat{min-width:120px;padding:12px 16px}
+  .hero-stat .number{font-size:22px}
+  .topbar{padding:12px 16px}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .reading-progress{left:0}
 }
-.reading-progress-bar {
-  height: 100%; background: var(--accent); width: 0%; transition: width 0.1s;
-}
-@media (max-width: 900px) {
-  .reading-progress { left: 0; }
-}
+.sidebar-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:99}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media print{.sidebar,.topbar{display:none}.main{margin-left:0}.collapsible-body{max-height:none!important}.content{max-width:100%}}
 </style>
 </head>
 <body>
@@ -355,6 +277,7 @@ tr:hover td { background: var(--accent-light); }
   </div>
 
   <div class="content">
+    <!-- HERO -->
     <div class="hero" id="hero">
       <div class="hero-content">
         <h1>Urban Design &amp; City Planning:<br>Bangkok's Future Roadmap</h1>
@@ -368,30 +291,127 @@ tr:hover td { background: var(--accent-light); }
       </div>
     </div>
 
+    <!-- KEY FINDING -->
     <div class="callout callout-green">
       <span class="callout-icon">&#128221;</span>
       <div><strong>Key Finding:</strong> The gap between Singapore and Bangkok isn't about money — it's about governance. Singapore's success comes from integrated, long-term planning with a single authority that can execute. Bangkok has the money and the plans; what it lacks is the institutional coherence to make them work together.</div>
     </div>
 
     <div class="controls-row">
-      <span style="font-size:13px;color:var(--text-muted);">Click any section to expand. Use search to find topics.</span>
-      <div style="display:flex;gap:8px;">
+      <span style="font-size:13px;color:var(--text-muted);">Click sections to expand. Use search to find topics.</span>
+      <div style="display:flex;gap:8px">
         <button class="expand-btn" onclick="toggleAll(true)">Expand All</button>
         <button class="expand-btn" onclick="toggleAll(false)">Collapse All</button>
+      </div>
+    </div>
+
+    <!-- KEY STATS -->
+    <div class="stat-grid">
+      <div class="stat-card green">
+        <span class="stat-value">7.2M</span>
+        <span class="stat-label">Singapore Daily PT Riders</span>
+        <span class="stat-context">vs Bangkok's 650K</span>
+      </div>
+      <div class="stat-card red">
+        <span class="stat-value">500B</span>
+        <span class="stat-label">Baht/Year Lost to Traffic</span>
+        <span class="stat-context">3% of Thailand's GDP</span>
+      </div>
+      <div class="stat-card orange">
+        <span class="stat-value">40%</span>
+        <span class="stat-label">Bangkok Could Flood by 2030</span>
+        <span class="stat-context">From rainfall + sea rise</span>
+      </div>
+      <div class="stat-card blue">
+        <span class="stat-value">13/50</span>
+        <span class="stat-label">Districts with Zero Rail</span>
+        <span class="stat-context">~2M people unserved</span>
+      </div>
+      <div class="stat-card purple">
+        <span class="stat-value">1.47</span>
+        <span class="stat-label">m&sup2; Green Space/Person</span>
+        <span class="stat-context">WHO recommends 9 m&sup2;</span>
+      </div>
+      <div class="stat-card red">
+        <span class="stat-value">115hr</span>
+        <span class="stat-label">Hours Lost in Traffic/Year</span>
+        <span class="stat-context">Per driver in Bangkok</span>
+      </div>
+    </div>
+
+    <!-- CHART: SG vs BKK Comparison -->
+    <div class="chart-row">
+      <div class="chart-container">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Singapore vs Bangkok — Key Metrics</h4>
+        <canvas id="chartComparison"></canvas>
+      </div>
+      <div class="chart-container">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Transport Modal Share</h4>
+        <canvas id="chartModal"></canvas>
+      </div>
+    </div>
+
+    <!-- CHART: Governance Comparison Radar -->
+    <div class="chart-container" style="max-width:500px;margin:16px auto">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:12px;text-align:center">Governance Capability Comparison</h4>
+      <canvas id="chartRadar"></canvas>
+    </div>
+
+    <!-- PROGRESS BARS: Bangkok vs Targets -->
+    <div class="card" style="margin:20px 0">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:16px">Bangkok vs. International Benchmarks</h3>
+      <div class="progress-item">
+        <div class="progress-header"><span class="progress-label">Green Space (m&sup2;/person)</span><span class="progress-value">1.47 / 9.0</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:16%;background:var(--red)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header"><span class="progress-label">Rail Coverage (districts)</span><span class="progress-value">37 / 50</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:74%;background:var(--orange)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header"><span class="progress-label">Drainage Capacity (mm/hr)</span><span class="progress-value">60 / 100</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:60%;background:var(--orange)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header"><span class="progress-label">Road Land Allocation</span><span class="progress-value">8% / 23% (Tokyo)</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:35%;background:var(--red)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header"><span class="progress-label">AI Traffic Intersections</span><span class="progress-value">74 / 500+</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:15%;background:var(--blue)"></div></div>
       </div>
     </div>
 
     <!-- PART I -->
     <div class="section" id="part1">
       <div class="section-header">
-        <div class="section-icon" style="background:var(--accent-light);color:var(--accent);">I</div>
+        <div class="section-icon" style="background:var(--green-light);color:var(--green)">I</div>
         <h2>Best Practices in Urban Design</h2>
-        <span class="badge" style="background:var(--accent-light);color:var(--accent);">2024-2025</span>
+        <span class="badge" style="background:var(--green-light);color:var(--green)">2024-2025</span>
       </div>
 
-      <div class="collapsible open" data-search="the future of urbanism a 2024-2025 guide to best practices in city planning and design">
+      <!-- TL;DR -->
+      <div class="tldr">
+        <div class="tldr-title">TL;DR — Three Pillars of Modern Urbanism</div>
+        <ul>
+          <li>Smart cities use AI, digital twins, and IoT to optimize urban systems in real time</li>
+          <li>Resilient design embraces nature-based solutions: sponge cities, green roofs, urban forests</li>
+          <li>Human-centric planning prioritizes equity, 15-minute neighborhoods, and social inclusion</li>
+        </ul>
+      </div>
+
+      <!-- CHART: Global Best Practice Cities -->
+      <div class="chart-container">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Global Best Practice Cities by Category</h4>
+        <canvas id="chartCities"></canvas>
+      </div>
+
+      <div class="collapsible" data-search="the future of urbanism a 2024-2025 guide to best practices in city planning and design">
         <div class="collapsible-header">
-          <span>The Future of Urbanism: A 2024-2025 Guide to Best Practices in City Planning and Design</span>
+          <div style="flex:1">
+            <span>The Future of Urbanism: A 2024-2025 Guide to Best Practices in City Planning and Design</span>
+            <div class="collapsible-preview">Detailed analysis and data</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -401,9 +421,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the new urban paradigm convergent trends for 2024-2025">
+      <div class="collapsible" data-search="the new urban paradigm convergent trends for 2024-2025">
         <div class="collapsible-header">
-          <span>The New Urban Paradigm: Convergent Trends for 2024-2025</span>
+          <div style="flex:1">
+            <span>The New Urban Paradigm: Convergent Trends for 2024-2025</span>
+            <div class="collapsible-preview">Contemporary urban planning is undergoing a profound transformation, moving decisively away from the static, siloed appr</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -413,9 +436,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the smart and connected city technology-driven urbanism">
+      <div class="collapsible" data-search="the smart and connected city technology-driven urbanism">
         <div class="collapsible-header">
-          <span>The Smart and Connected City: Technology-Driven Urbanism</span>
+          <div style="flex:1">
+            <span>The Smart and Connected City: Technology-Driven Urbanism</span>
+            <div class="collapsible-preview">The &amp;#x27;Smart City&amp;#x27; paradigm has evolved from a theoretical concept into a practical framework for improving urba</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -426,9 +452,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the resilient city sustainability and green infrastructure">
+      <div class="collapsible" data-search="the resilient city sustainability and green infrastructure">
         <div class="collapsible-header">
-          <span>The Resilient City: Sustainability and Green Infrastructure</span>
+          <div style="flex:1">
+            <span>The Resilient City: Sustainability and Green Infrastructure</span>
+            <div class="collapsible-preview">In the face of escalating climate-related risks such as extreme weather events and rising sea levels, urban planning is </div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -440,9 +469,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the human-centric city designing for people proximity and well-being">
+      <div class="collapsible" data-search="the human-centric city designing for people proximity and well-being">
         <div class="collapsible-header">
-          <span>The Human-Centric City: Designing for People, Proximity, and Well-being</span>
+          <div style="flex:1">
+            <span>The Human-Centric City: Designing for People, Proximity, and Well-being</span>
+            <div class="collapsible-preview">A clear global shift is underway in urban design, moving away from decades of prioritizing vehicle movement and toward a</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -453,9 +485,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="integrated mobility the future of urban transit">
+      <div class="collapsible" data-search="integrated mobility the future of urban transit">
         <div class="collapsible-header">
-          <span>Integrated Mobility: The Future of Urban Transit</span>
+          <div style="flex:1">
+            <span>Integrated Mobility: The Future of Urban Transit</span>
+            <div class="collapsible-preview">Public transit is undergoing a significant transformation as it works to recover ridership and adapt to post-pandemic tr</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -466,9 +501,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="policy governance and implementation">
+      <div class="collapsible" data-search="policy governance and implementation">
         <div class="collapsible-header">
-          <span>Policy, Governance, and Implementation</span>
+          <div style="flex:1">
+            <span>Policy, Governance, and Implementation</span>
+            <div class="collapsible-preview">Translating ambitious urban visions into tangible reality requires a robust framework of supportive policies, inclusive </div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -479,9 +517,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="conclusion">
+      <div class="collapsible" data-search="conclusion">
         <div class="collapsible-header">
-          <span>Conclusion</span>
+          <div style="flex:1">
+            <span>Conclusion</span>
+            <div class="collapsible-preview">The leading best practices in urban planning for 2024-2025 represent a sophisticated synthesis of technology, sustainabi</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -491,9 +532,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="references">
+      <div class="collapsible" data-search="references">
         <div class="collapsible-header">
-          <span>References</span>
+          <div style="flex:1">
+            <span>References</span>
+            <div class="collapsible-preview">[world_cities_report_2024_case_study_annex.pdf](https://unhabitat.org/sites/default/files/2024/11/world_cities_report_20</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -548,14 +592,26 @@ tr:hover td { background: var(--accent-light); }
     <!-- PART II -->
     <div class="section" id="part2">
       <div class="section-header">
-        <div class="section-icon" style="background:var(--blue-light);color:var(--blue);">II</div>
+        <div class="section-icon" style="background:var(--blue-light);color:var(--blue)">II</div>
         <h2>Singapore vs. Bangkok</h2>
-        <span class="badge" style="background:var(--blue-light);color:var(--blue);">Comparison</span>
+        <span class="badge" style="background:var(--blue-light);color:var(--blue)">Comparison</span>
       </div>
 
-      <div class="collapsible open" data-search="foundational differences in governance and planning philosophy">
+      <div class="tldr">
+        <div class="tldr-title">TL;DR — The Governance Gap</div>
+        <ul>
+          <li>Singapore: 3-tier planning (50yr Concept → 5yr Master → Project Plans), 4 integrated agencies</li>
+          <li>Bangkok: 10+ agencies with overlapping mandates, no single authority, reactive planning</li>
+          <li>Result: Singapore achieves 7.2M daily PT riders; Bangkok has world-leading congestion despite rail expansion</li>
+        </ul>
+      </div>
+
+      <div class="collapsible" data-search="foundational differences in governance and planning philosophy">
         <div class="collapsible-header">
-          <span>Foundational Differences in Governance and Planning Philosophy</span>
+          <div style="flex:1">
+            <span>Foundational Differences in Governance and Planning Philosophy</span>
+            <div class="collapsible-preview">The starkly different urban outcomes observed in Singapore and Bangkok are rooted in their fundamentally distinct govern</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -565,9 +621,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="singapore the proactive integrated state-led model">
+      <div class="collapsible" data-search="singapore the proactive integrated state-led model">
         <div class="collapsible-header">
-          <span>Singapore: The Proactive, Integrated State-Led Model</span>
+          <div style="flex:1">
+            <span>Singapore: The Proactive, Integrated State-Led Model</span>
+            <div class="collapsible-preview">Singapore&amp;#x27;s success in urban planning is a direct result of a proactive, highly centralized, and integrated governa</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -592,9 +651,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="bangkok the reactive fragmented multi-actor model">
+      <div class="collapsible" data-search="bangkok the reactive fragmented multi-actor model">
         <div class="collapsible-header">
-          <span>Bangkok: The Reactive, Fragmented Multi-Actor Model</span>
+          <div style="flex:1">
+            <span>Bangkok: The Reactive, Fragmented Multi-Actor Model</span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s approach to urban planning is characterized by a complex, multi-layered governance structure that has his</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -604,9 +666,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="a top-down governance framework">
+      <div class="collapsible" data-search="a top-down governance framework">
         <div class="collapsible-header">
-          <span>A Top-Down Governance Framework</span>
+          <div style="flex:1">
+            <span>A Top-Down Governance Framework</span>
+            <div class="collapsible-preview">The governance of urban planning in Bangkok operates within a distinct top-down hierarchy.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -617,9 +682,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="a history of reactive planning">
+      <div class="collapsible" data-search="a history of reactive planning">
         <div class="collapsible-header">
-          <span>A History of Reactive Planning</span>
+          <div style="flex:1">
+            <span>A History of Reactive Planning</span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s planning history is one of perpetually trying to catch up with its own explosive growth.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -630,9 +698,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the influence of monarchy-led urban development">
+      <div class="collapsible" data-search="the influence of monarchy-led urban development">
         <div class="collapsible-header">
-          <span>The Influence of Monarchy-led Urban Development</span>
+          <div style="flex:1">
+            <span>The Influence of Monarchy-led Urban Development</span>
+            <div class="collapsible-preview">A unique and influential layer within Bangkok&amp;#x27;s institutional landscape is the role of &amp;#x27;Monarchy-led Urban Dev</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -642,9 +713,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="challenges of coordination and implementation">
+      <div class="collapsible" data-search="challenges of coordination and implementation">
         <div class="collapsible-header">
-          <span>Challenges of Coordination and Implementation</span>
+          <div style="flex:1">
+            <span>Challenges of Coordination and Implementation</span>
+            <div class="collapsible-preview">The intricate web of actors involved in Bangkok&amp;#x27;s urban planning creates significant hurdles for coordination, acco</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -655,9 +729,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="comparative analysis of transportation infrastructure">
+      <div class="collapsible" data-search="comparative analysis of transportation infrastructure">
         <div class="collapsible-header">
-          <span>Comparative Analysis of Transportation Infrastructure</span>
+          <div style="flex:1">
+            <span>Comparative Analysis of Transportation Infrastructure</span>
+            <div class="collapsible-preview">The transportation systems of Singapore and Bangkok offer a clear illustration of their divergent urban planning philoso</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -676,9 +753,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="bangkok expanding mass transit amidst enduring congestion">
+      <div class="collapsible" data-search="bangkok expanding mass transit amidst enduring congestion">
         <div class="collapsible-header">
-          <span>Bangkok: Expanding Mass Transit Amidst Enduring Congestion</span>
+          <div style="flex:1">
+            <span>Bangkok: Expanding Mass Transit Amidst Enduring Congestion</span>
+            <div class="collapsible-preview">Bangkok has undertaken a massive expansion of its public transportation infrastructure, particularly its rail network, i</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -688,9 +768,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="massive investment in rail infrastructure">
+      <div class="collapsible" data-search="massive investment in rail infrastructure">
         <div class="collapsible-header">
-          <span>Massive Investment in Rail Infrastructure</span>
+          <div style="flex:1">
+            <span>Massive Investment in Rail Infrastructure</span>
+            <div class="collapsible-preview">In recent decades, public transport infrastructure has become a cornerstone of urban planning in Bangkok.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -700,9 +783,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="persistent congestion and high car ownership">
+      <div class="collapsible" data-search="persistent congestion and high car ownership">
         <div class="collapsible-header">
-          <span>Persistent Congestion and High Car Ownership</span>
+          <div style="flex:1">
+            <span>Persistent Congestion and High Car Ownership</span>
+            <div class="collapsible-preview">Despite the expanding rail system, Bangkok remains one of the world&amp;#x27;s most congested cities, ranking 77th out of 38</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -712,9 +798,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the essential role of informal and hired transport">
+      <div class="collapsible" data-search="the essential role of informal and hired transport">
         <div class="collapsible-header">
-          <span>The Essential Role of Informal and Hired Transport</span>
+          <div style="flex:1">
+            <span>The Essential Role of Informal and Hired Transport</span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s transport system is characterized by a mix of formal and informal modes.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -724,9 +813,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="challenges of systemic integration">
+      <div class="collapsible" data-search="challenges of systemic integration">
         <div class="collapsible-header">
-          <span>Challenges of Systemic Integration</span>
+          <div style="flex:1">
+            <span>Challenges of Systemic Integration</span>
+            <div class="collapsible-preview">A critical systemic weakness in Bangkok&amp;#x27;s transport network is the lack of seamless integration between its various</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -737,9 +829,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="measuring success a tale of two outcomes">
+      <div class="collapsible" data-search="measuring success a tale of two outcomes">
         <div class="collapsible-header">
-          <span>Measuring Success: A Tale of Two Outcomes</span>
+          <div style="flex:1">
+            <span>Measuring Success: A Tale of Two Outcomes</span>
+            <div class="collapsible-preview">The effectiveness of an urban transport system can be evaluated through a variety of performance measures that quantify </div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -749,9 +844,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="singapore's balanced scorecard for mobility">
+      <div class="collapsible" data-search="singapore's balanced scorecard for mobility">
         <div class="collapsible-header">
-          <span>Singapore&#x27;s Balanced Scorecard for Mobility</span>
+          <div style="flex:1">
+            <span>Singapore&#x27;s Balanced Scorecard for Mobility</span>
+            <div class="collapsible-preview">Success in Singapore&amp;#x27;s transport sector is defined and measured through a comprehensive and balanced set of quantit</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -762,9 +860,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="bangkok's progress tempered by persistent congestion">
+      <div class="collapsible" data-search="bangkok's progress tempered by persistent congestion">
         <div class="collapsible-header">
-          <span>Bangkok&#x27;s Progress Tempered by Persistent Congestion</span>
+          <div style="flex:1">
+            <span>Bangkok&#x27;s Progress Tempered by Persistent Congestion</span>
+            <div class="collapsible-preview">In Bangkok, the primary metric of success in recent years has been the rapid expansion of its rail transit network.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -775,9 +876,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="a tale of two modal shares">
+      <div class="collapsible" data-search="a tale of two modal shares">
         <div class="collapsible-header">
-          <span>A Tale of Two Modal Shares</span>
+          <div style="flex:1">
+            <span>A Tale of Two Modal Shares</span>
+            <div class="collapsible-preview">The ultimate measure of a transport system&amp;#x27;s character is its modal share—the proportion of trips taken by differen</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -792,9 +896,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="policy and integration the decisive factor">
+      <div class="collapsible" data-search="policy and integration the decisive factor">
         <div class="collapsible-header">
-          <span>Policy and Integration: The Decisive Factor</span>
+          <div style="flex:1">
+            <span>Policy and Integration: The Decisive Factor</span>
+            <div class="collapsible-preview">The comparison of outcomes in Singapore and Bangkok powerfully illustrates that infrastructure investment alone is insuf</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -805,9 +912,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="public and green spaces contrasting visions and realities">
+      <div class="collapsible" data-search="public and green spaces contrasting visions and realities">
         <div class="collapsible-header">
-          <span>Public and Green Spaces: Contrasting Visions and Realities</span>
+          <div style="flex:1">
+            <span>Public and Green Spaces: Contrasting Visions and Realities</span>
+            <div class="collapsible-preview">The provision and quality of public and green spaces in Singapore and Bangkok starkly reflect their differing urban plan</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -817,9 +927,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="singapore 'city in nature' as an integrated national strategy">
+      <div class="collapsible" data-search="singapore 'city in nature' as an integrated national strategy">
         <div class="collapsible-header">
-          <span>Singapore: &#x27;City in Nature&#x27; as an Integrated National Strategy</span>
+          <div style="flex:1">
+            <span>Singapore: &#x27;City in Nature&#x27; as an Integrated National Strategy</span>
+            <div class="collapsible-preview">Singapore&amp;#x27;s transformation into a &amp;#x27;City in Nature&amp;#x27; is a core pillar of its national urban strategy, movin</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -843,9 +956,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="bangkok addressing a critical deficit with ambitious plans">
+      <div class="collapsible" data-search="bangkok addressing a critical deficit with ambitious plans">
         <div class="collapsible-header">
-          <span>Bangkok: Addressing a Critical Deficit with Ambitious Plans</span>
+          <div style="flex:1">
+            <span>Bangkok: Addressing a Critical Deficit with Ambitious Plans</span>
+            <div class="collapsible-preview">Bangkok, one of Southeast Asia&amp;#x27;s fastest-growing megacities, is grappling with the consequences of rapid, dense urb</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -862,9 +978,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="zoning and land use certainty vs. complexity">
+      <div class="collapsible" data-search="zoning and land use certainty vs. complexity">
         <div class="collapsible-header">
-          <span>Zoning and Land Use: Certainty vs. Complexity</span>
+          <div style="flex:1">
+            <span>Zoning and Land Use: Certainty vs. Complexity</span>
+            <div class="collapsible-preview">The mechanisms for controlling land use and zoning in Singapore and Bangkok highlight a fundamental divergence between a</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -874,9 +993,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="singapore a discretionary system with legal certainty">
+      <div class="collapsible" data-search="singapore a discretionary system with legal certainty">
         <div class="collapsible-header">
-          <span>Singapore: A Discretionary System with Legal Certainty</span>
+          <div style="flex:1">
+            <span>Singapore: A Discretionary System with Legal Certainty</span>
+            <div class="collapsible-preview">Singapore&amp;#x27;s urban planning framework is a sophisticated, three-tiered system characterized by a high degree of cent</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -886,9 +1008,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the master plan as a legally binding guide">
+      <div class="collapsible" data-search="the master plan as a legally binding guide">
         <div class="collapsible-header">
-          <span>The Master Plan as a Legally Binding Guide</span>
+          <div style="flex:1">
+            <span>The Master Plan as a Legally Binding Guide</span>
+            <div class="collapsible-preview">The Master Plan serves as the primary instrument for development control in Singapore.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -898,9 +1023,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="defining land use and development intensity">
+      <div class="collapsible" data-search="defining land use and development intensity">
         <div class="collapsible-header">
-          <span>Defining Land Use and Development Intensity</span>
+          <div style="flex:1">
+            <span>Defining Land Use and Development Intensity</span>
+            <div class="collapsible-preview">A key strength of Singapore&amp;#x27;s system is the clarity it provides regarding land use and development intensity.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -915,9 +1043,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="enabling strategic national development">
+      <div class="collapsible" data-search="enabling strategic national development">
         <div class="collapsible-header">
-          <span>Enabling Strategic National Development</span>
+          <div style="flex:1">
+            <span>Enabling Strategic National Development</span>
+            <div class="collapsible-preview">This centralized and legally robust planning system has been instrumental in executing Singapore&amp;#x27;s major strategic </div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -928,9 +1059,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="a dynamic and adaptive framework">
+      <div class="collapsible" data-search="a dynamic and adaptive framework">
         <div class="collapsible-header">
-          <span>A Dynamic and Adaptive Framework</span>
+          <div style="flex:1">
+            <span>A Dynamic and Adaptive Framework</span>
+            <div class="collapsible-preview">Despite its structured and legally defined nature, Singapore&amp;#x27;s planning system is not static.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -940,9 +1074,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="bangkok a prescriptive system with implementation challenges">
+      <div class="collapsible" data-search="bangkok a prescriptive system with implementation challenges">
         <div class="collapsible-header">
-          <span>Bangkok: A Prescriptive System with Implementation Challenges</span>
+          <div style="flex:1">
+            <span>Bangkok: A Prescriptive System with Implementation Challenges</span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s approach to land use and zoning is anchored in a prescriptive framework known as the Bangkok Comprehensiv</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -952,9 +1089,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the framework of the bangkok comprehensive plan">
+      <div class="collapsible" data-search="the framework of the bangkok comprehensive plan">
         <div class="collapsible-header">
-          <span>The Framework of the Bangkok Comprehensive Plan</span>
+          <div style="flex:1">
+            <span>The Framework of the Bangkok Comprehensive Plan</span>
+            <div class="collapsible-preview">The Bangkok Comprehensive Plan (BCP) is the primary instrument guiding land use in the city, employing a detailed color-</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -964,9 +1104,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="inconsistent enforcement and regulatory gaps">
+      <div class="collapsible" data-search="inconsistent enforcement and regulatory gaps">
         <div class="collapsible-header">
-          <span>Inconsistent Enforcement and Regulatory Gaps</span>
+          <div style="flex:1">
+            <span>Inconsistent Enforcement and Regulatory Gaps</span>
+            <div class="collapsible-preview">Despite the detailed nature of the BCP, a primary challenge undermining its effectiveness is the inconsistent enforcemen</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -976,9 +1119,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="urban sprawl and incompatible land uses">
+      <div class="collapsible" data-search="urban sprawl and incompatible land uses">
         <div class="collapsible-header">
-          <span>Urban Sprawl and Incompatible Land Uses</span>
+          <div style="flex:1">
+            <span>Urban Sprawl and Incompatible Land Uses</span>
+            <div class="collapsible-preview">The combination of intense development pressure and inconsistent enforcement has fueled rapid urban sprawl and the probl</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -988,9 +1134,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="limited effectiveness amidst development pressures">
+      <div class="collapsible" data-search="limited effectiveness amidst development pressures">
         <div class="collapsible-header">
-          <span>Limited Effectiveness Amidst Development Pressures</span>
+          <div style="flex:1">
+            <span>Limited Effectiveness Amidst Development Pressures</span>
+            <div class="collapsible-preview">Ultimately, the effectiveness of the Bangkok Comprehensive Plan is constrained by the city&amp;#x27;s capacity to manage pow</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1000,9 +1149,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="conclusion">
+      <div class="collapsible" data-search="conclusion">
         <div class="collapsible-header">
-          <span>Conclusion</span>
+          <div style="flex:1">
+            <span>Conclusion</span>
+            <div class="collapsible-preview">The comparative analysis of Singapore and Bangkok reveals that successful urban planning hinges less on specific tools l</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1012,9 +1164,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="references">
+      <div class="collapsible" data-search="references">
         <div class="collapsible-header">
-          <span>References</span>
+          <div style="flex:1">
+            <span>References</span>
+            <div class="collapsible-preview">[Re-Examining Singapore&amp;#x27;s Urban Planning and Governance Framework | 2 |](https://www.taylorfrancis.com/chapters/edi</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1052,39 +1207,47 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="comparison">
-        <div class="comparison-card">
-          <h4><span class="dot" style="background:var(--green);"></span> Singapore</h4>
-          <div class="metric-row"><span class="metric-label">Model</span><span class="metric-value" style="color:var(--green);">State-led, integrated</span></div>
-          <div class="metric-row"><span class="metric-label">Planning</span><span class="metric-value">50yr Concept Plan</span></div>
-          <div class="metric-row"><span class="metric-label">Master Plan</span><span class="metric-value">Legally binding</span></div>
-          <div class="metric-row"><span class="metric-label">Agencies</span><span class="metric-value">URA, HDB, LTA</span></div>
-          <div class="metric-row"><span class="metric-label">PT Ridership</span><span class="metric-value">7.2M daily</span></div>
-          <div class="metric-row"><span class="metric-label">Green Space</span><span class="metric-value">0.78 ha/1,000</span></div>
-        </div>
-        <div class="comparison-card">
-          <h4><span class="dot" style="background:var(--orange);"></span> Bangkok</h4>
-          <div class="metric-row"><span class="metric-label">Model</span><span class="metric-value" style="color:var(--orange);">Fragmented, reactive</span></div>
-          <div class="metric-row"><span class="metric-label">Planning</span><span class="metric-value">Reactive, ad-hoc</span></div>
-          <div class="metric-row"><span class="metric-label">Master Plan</span><span class="metric-value">Guideline only</span></div>
-          <div class="metric-row"><span class="metric-label">Agencies</span><span class="metric-value">BMA, MOT, ETA...</span></div>
-          <div class="metric-row"><span class="metric-label">PT Ridership</span><span class="metric-value">~650K (BTS only)</span></div>
-          <div class="metric-row"><span class="metric-label">Green Space</span><span class="metric-value">1.47 m&sup2;/person</span></div>
-        </div>
+      <div class="chart-container">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Transport Performance Comparison</h4>
+        <canvas id="chartTransport"></canvas>
       </div>
     </div>
 
     <!-- PART III -->
     <div class="section" id="part3">
       <div class="section-header">
-        <div class="section-icon" style="background:var(--red-light);color:var(--red);">III</div>
+        <div class="section-icon" style="background:var(--red-light);color:var(--red)">III</div>
         <h2>Bangkok's Infrastructure Challenges</h2>
-        <span class="badge" style="background:var(--red-light);color:var(--red);">Critical</span>
+        <span class="badge" style="background:var(--red-light);color:var(--red)">Critical</span>
       </div>
 
-      <div class="collapsible open" data-search="core challenge 1 chronic urban flooding">
+      <div class="tldr">
+        <div class="tldr-title">TL;DR — Three Converging Crises</div>
+        <ul>
+          <li>Flooding: 40% of Bangkok could be underwater by 2030 — city sinks 2cm/yr, sea rises 4mm/yr</li>
+          <li>Congestion: 115 hours lost per driver annually, costing 500B baht (3% of GDP)</li>
+          <li>Transit: 13 of 50 districts have zero rail coverage, fragmented operators, disjointed ticketing</li>
+        </ul>
+      </div>
+
+      <!-- CHART: Flood Risk Timeline -->
+      <div class="chart-container">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Bangkok Flood Risk Projection</h4>
+        <canvas id="chartFlood"></canvas>
+      </div>
+
+      <!-- CHART: Congestion Impact -->
+      <div class="chart-container">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Economic Impact of Bangkok Congestion</h4>
+        <canvas id="chartEcon"></canvas>
+      </div>
+
+      <div class="collapsible" data-search="core challenge 1 chronic urban flooding">
         <div class="collapsible-header">
-          <span>Core Challenge 1: Chronic Urban Flooding</span>
+          <div style="flex:1">
+            <span>Core Challenge 1: Chronic Urban Flooding <span class="severity sev-critical">Critical</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s struggle with water is a defining and existential challenge, arising from a complex interplay of environm</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1094,9 +1257,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="causes a confluence of factors">
+      <div class="collapsible" data-search="causes a confluence of factors">
         <div class="collapsible-header">
-          <span>Causes: A Confluence of Factors</span>
+          <div style="flex:1">
+            <span>Causes: A Confluence of Factors <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s persistent flooding is not the result of a single issue but rather a complex interplay of environmental, </div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1114,9 +1280,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="socio-economic and physical impacts">
+      <div class="collapsible" data-search="socio-economic and physical impacts">
         <div class="collapsible-header">
-          <span>Socio-Economic and Physical Impacts</span>
+          <div style="flex:1">
+            <span>Socio-Economic and Physical Impacts <span class="severity sev-warning">Warning</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s vulnerability to flooding, driven by its geography and exacerbated by climate change, inflicts severe and</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1135,9 +1304,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="current mitigation strategies grey and green infrastructure">
+      <div class="collapsible" data-search="current mitigation strategies grey and green infrastructure">
         <div class="collapsible-header">
-          <span>Current Mitigation Strategies: Grey and Green Infrastructure</span>
+          <div style="flex:1">
+            <span>Current Mitigation Strategies: Grey and Green Infrastructure <span class="severity sev-info">Progress</span></span>
+            <div class="collapsible-preview">Bangkok employs a dual-pronged approach to manage its persistent flood risk, combining extensive traditional &amp;quot;grey&amp;</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1158,9 +1330,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="core challenge 2 severe traffic congestion">
+      <div class="collapsible" data-search="core challenge 2 severe traffic congestion">
         <div class="collapsible-header">
-          <span>Core Challenge 2: Severe Traffic Congestion</span>
+          <div style="flex:1">
+            <span>Core Challenge 2: Severe Traffic Congestion <span class="severity sev-warning">Warning</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s traffic gridlock is a chronic and worsening problem that imposes significant economic and social costs on</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1170,9 +1345,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="severity and economic impact">
+      <div class="collapsible" data-search="severity and economic impact">
         <div class="collapsible-header">
-          <span>Severity and Economic Impact</span>
+          <div style="flex:1">
+            <span>Severity and Economic Impact <span class="severity sev-warning">Warning</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s reputation as one of the world&amp;#x27;s most congested urban centers is well-documented, with the city cons</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1195,9 +1373,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="root causes vehicles planning and policy">
+      <div class="collapsible" data-search="root causes vehicles planning and policy">
         <div class="collapsible-header">
-          <span>Root Causes: Vehicles, Planning, and Policy</span>
+          <div style="flex:1">
+            <span>Root Causes: Vehicles, Planning, and Policy <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s chronic traffic congestion is not a recent phenomenon but the result of deeply embedded issues related to</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1223,9 +1404,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="current mitigation initiatives">
+      <div class="collapsible" data-search="current mitigation initiatives">
         <div class="collapsible-header">
-          <span>Current Mitigation Initiatives</span>
+          <div style="flex:1">
+            <span>Current Mitigation Initiatives <span class="severity sev-info">Progress</span></span>
+            <div class="collapsible-preview">To combat its severe and costly traffic congestion, Bangkok is implementing a multi-faceted strategy that combines tradi</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1246,9 +1430,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="core challenge 3 a fragmented public transportation system">
+      <div class="collapsible" data-search="core challenge 3 a fragmented public transportation system">
         <div class="collapsible-header">
-          <span>Core Challenge 3: A Fragmented Public Transportation System</span>
+          <div style="flex:1">
+            <span>Core Challenge 3: A Fragmented Public Transportation System <span class="severity sev-warning">Warning</span></span>
+            <div class="collapsible-preview">Despite significant investment in modern rail lines, Bangkok&amp;#x27;s public transport network suffers from systemic defic</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1258,9 +1445,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="systemic deficiencies integration coverage and capacity">
+      <div class="collapsible" data-search="systemic deficiencies integration coverage and capacity">
         <div class="collapsible-header">
-          <span>Systemic Deficiencies: Integration, Coverage, and Capacity</span>
+          <div style="flex:1">
+            <span>Systemic Deficiencies: Integration, Coverage, and Capacity <span class="severity sev-warning">Warning</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s public transportation network is hampered by deep-rooted systemic deficiencies that manifest as a lack of</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1282,9 +1472,13 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="affordability and the 20-baht fare policy">
+      <div class="collapsible" data-search="affordability and the 20-baht fare policy">
         <div class="collapsible-header">
-          <span>Affordability and the 20-Baht Fare Policy</span>
+          <div style="flex:1">
+            <span>Affordability and the 20-Baht Fare Policy <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">The High Cost of Commuting  
+ A significant barrier to the widespread use of public transportation in Bangkok is its cos</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1309,9 +1503,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the path forward integrated urban planning and future solutions">
+      <div class="collapsible" data-search="the path forward integrated urban planning and future solutions">
         <div class="collapsible-header">
-          <span>The Path Forward: Integrated Urban Planning and Future Solutions</span>
+          <div style="flex:1">
+            <span>The Path Forward: Integrated Urban Planning and Future Solutions <span class="severity sev-info">Progress</span></span>
+            <div class="collapsible-preview">To address its deep-seated infrastructure problems, Bangkok is pursuing an ambitious and integrated vision for its futur</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1321,9 +1518,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="long-term urban planning and sustainability goals">
+      <div class="collapsible" data-search="long-term urban planning and sustainability goals">
         <div class="collapsible-header">
-          <span>Long-Term Urban Planning and Sustainability Goals</span>
+          <div style="flex:1">
+            <span>Long-Term Urban Planning and Sustainability Goals <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s approach to long-term urban development is framed by a series of interconnected, multi-decade strategies </div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1349,9 +1549,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="the future of public transportation">
+      <div class="collapsible" data-search="the future of public transportation">
         <div class="collapsible-header">
-          <span>The Future of Public Transportation</span>
+          <div style="flex:1">
+            <span>The Future of Public Transportation <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Bangkok is undertaking a comprehensive overhaul of its public transportation network, aiming to create an integrated, mu</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1361,9 +1564,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="rail network expansion under m-map 2">
+      <div class="collapsible" data-search="rail network expansion under m-map 2">
         <div class="collapsible-header">
-          <span>Rail Network Expansion Under M-MAP 2</span>
+          <div style="flex:1">
+            <span>Rail Network Expansion Under M-MAP 2 <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">The core of Bangkok&amp;#x27;s public transport strategy is the Mass Rapid Transit Master Plan 2 (M-MAP 2), an ambitious blu</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1374,9 +1580,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="modernizing and reforming the bus system">
+      <div class="collapsible" data-search="modernizing and reforming the bus system">
         <div class="collapsible-header">
-          <span>Modernizing and Reforming the Bus System</span>
+          <div style="flex:1">
+            <span>Modernizing and Reforming the Bus System <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">In parallel with the rail expansion, Bangkok&amp;#x27;s bus system is undergoing a major reform to address decades of stagna</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1387,9 +1596,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="creating a seamless travel experience">
+      <div class="collapsible" data-search="creating a seamless travel experience">
         <div class="collapsible-header">
-          <span>Creating a Seamless Travel Experience</span>
+          <div style="flex:1">
+            <span>Creating a Seamless Travel Experience <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">To unify the expanding and diversifying transport network, the city is moving towards a modern, integrated payment syste</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1399,9 +1611,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="an integrated multi-modal vision">
+      <div class="collapsible" data-search="an integrated multi-modal vision">
         <div class="collapsible-header">
-          <span>An Integrated, Multi-Modal Vision</span>
+          <div style="flex:1">
+            <span>An Integrated, Multi-Modal Vision <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Ultimately, the individual initiatives in rail, bus, and payment systems are designed to function as a cohesive whole.</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1418,9 +1633,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="expert recommendations and systemic challenges">
+      <div class="collapsible" data-search="expert recommendations and systemic challenges">
         <div class="collapsible-header">
-          <span>Expert Recommendations and Systemic Challenges</span>
+          <div style="flex:1">
+            <span>Expert Recommendations and Systemic Challenges <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">While Bangkok has articulated a clear vision for its urban future, its successful implementation depends on adopting int</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1430,9 +1648,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="key expert recommendations">
+      <div class="collapsible" data-search="key expert recommendations">
         <div class="collapsible-header">
-          <span>Key Expert Recommendations</span>
+          <div style="flex:1">
+            <span>Key Expert Recommendations <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Expert analysis of Bangkok&amp;#x27;s urban challenges has produced a set of strategic recommendations aimed at transforming</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1442,9 +1663,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="integrated citizen-centric urban governance">
+      <div class="collapsible" data-search="integrated citizen-centric urban governance">
         <div class="collapsible-header">
-          <span>Integrated, Citizen-Centric Urban Governance</span>
+          <div style="flex:1">
+            <span>Integrated, Citizen-Centric Urban Governance <span class="severity sev-warning">Warning</span></span>
+            <div class="collapsible-preview">Experts stress that a foundational shift towards integrated and citizen-centric urban governance is essential for Bangko</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1455,9 +1679,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="leveraging data-driven management">
+      <div class="collapsible" data-search="leveraging data-driven management">
         <div class="collapsible-header">
-          <span>Leveraging Data-Driven Management</span>
+          <div style="flex:1">
+            <span>Leveraging Data-Driven Management <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">A central recommendation is for Bangkok to fully leverage data-driven management, moving beyond simple data collection t</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1468,9 +1695,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="reimagining urban mobility">
+      <div class="collapsible" data-search="reimagining urban mobility">
         <div class="collapsible-header">
-          <span>Reimagining Urban Mobility</span>
+          <div style="flex:1">
+            <span>Reimagining Urban Mobility <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Experts agree that reimagining urban mobility is crucial to reducing Bangkok&amp;#x27;s chronic traffic congestion and priva</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1481,9 +1711,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="adopting a '15-minute city' framework">
+      <div class="collapsible" data-search="adopting a '15-minute city' framework">
         <div class="collapsible-header">
-          <span>Adopting a &#x27;15-Minute City&#x27; Framework</span>
+          <div style="flex:1">
+            <span>Adopting a &#x27;15-Minute City&#x27; Framework <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">To improve local accessibility and quality of life, experts propose adopting principles aligned with the &amp;#x27;15-Minute</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1494,9 +1727,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="implementation hurdles and overcoming them">
+      <div class="collapsible" data-search="implementation hurdles and overcoming them">
         <div class="collapsible-header">
-          <span>Implementation Hurdles and Overcoming Them</span>
+          <div style="flex:1">
+            <span>Implementation Hurdles and Overcoming Them <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Bangkok&amp;#x27;s ambitious urban transformation is confronted by significant implementation hurdles that threaten to derai</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1520,9 +1756,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="conclusion">
+      <div class="collapsible" data-search="conclusion">
         <div class="collapsible-header">
-          <span>Conclusion</span>
+          <div style="flex:1">
+            <span>Conclusion <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">Bangkok is engaged in a monumental effort to transform itself from a city strained by rapid, unplanned growth into a res</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1532,9 +1771,12 @@ tr:hover td { background: var(--accent-light); }
         </div>
       </div>
 
-      <div class="collapsible open" data-search="references">
+      <div class="collapsible" data-search="references">
         <div class="collapsible-header">
-          <span>References</span>
+          <div style="flex:1">
+            <span>References <span class="severity sev-moderate">Context</span></span>
+            <div class="collapsible-preview">[bangkok-master-plan-on-climate-change-2013-2023.pdf](https://datacenter.dcce.go.th/media/881500/bangkok-master-plan-on-</div>
+          </div>
           <span class="chevron">&#9660;</span>
         </div>
         <div class="collapsible-body">
@@ -1580,9 +1822,9 @@ tr:hover td { background: var(--accent-light); }
     <!-- PART IV -->
     <div class="section" id="part4">
       <div class="section-header">
-        <div class="section-icon" style="background:var(--purple-light);color:var(--purple);">IV</div>
+        <div class="section-icon" style="background:var(--purple-light);color:var(--purple)">IV</div>
         <h2>Recommendations for Bangkok</h2>
-        <span class="badge" style="background:var(--purple-light);color:var(--purple);">Action Plan</span>
+        <span class="badge" style="background:var(--purple-light);color:var(--purple)">Action Plan</span>
       </div>
 
       <div class="callout callout-purple">
@@ -1590,83 +1832,110 @@ tr:hover td { background: var(--accent-light); }
         <div><strong>Overarching Principle:</strong> Bangkok needs integrated governance before any single intervention can succeed. Without a unified authority, transport, flood, and zoning reforms will remain siloed — exactly as they are now.</div>
       </div>
 
-      <div class="rec-card">
-        <h4>1. Create an Integrated Urban Planning Authority <span class="priority priority-high">High Priority</span></h4>
-        <p>Modelled on Singapore\'s URA, a single empowered body coordinating transport, land use, flood management, and green space planning.</p>
-        <ul>
-          <li>Consolidate BMA, MOT, and transport agency planning functions</li>
-          <li>Legally binding master plan with 5-year review cycles</li>
-          <li>Cross-agency committees with enforcement power</li>
-          <li>Land value capture to fund infrastructure</li>
-        </ul>
+      <!-- CHART: Recommendation Impact vs Effort -->
+      <div class="chart-container">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">Recommendation Impact vs. Implementation Effort</h4>
+        <canvas id="chartImpact"></canvas>
       </div>
 
-      <div class="rec-card">
-        <h4>2. Implement Vehicle Demand Management <span class="priority priority-high">High Priority</span></h4>
-        <p>Bangkok\'s rail expansion has failed to reduce congestion because car ownership remains cheap.</p>
-        <ul>
-          <li>Phase in congestion pricing for downtown core (40-50 baht/entry)</li>
-          <li>Gradually increase parking fees in commercial centers</li>
-          <li>Introduce vehicle registration caps (Singapore COE model)</li>
-          <li>Expand the 20-baht fare to all lines</li>
-        </ul>
+      <!-- TIMELINE -->
+      <h3 style="font-size:18px;font-weight:700;margin:24px 0 16px">Implementation Timeline</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot high">1</div>
+          <div class="timeline-content">
+            <div class="timeline-phase now">Immediate (0-12 months)</div>
+            <h4>Create Integrated Urban Planning Authority <span class="severity sev-critical">High Priority</span></h4>
+            <p>Modelled on Singapore's URA — consolidate BMA, MOT, and transport agency planning into a single empowered body.</p>
+            <ul>
+              <li>Legally binding master plan with 5-year review cycles</li>
+              <li>Cross-agency committees with enforcement power</li>
+              <li>Land value capture to fund infrastructure</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot high">2</div>
+          <div class="timeline-content">
+            <div class="timeline-phase now">Immediate (0-12 months)</div>
+            <h4>Unify Transit Payment &amp; Expand Coverage <span class="severity sev-critical">High Priority</span></h4>
+            <p>Move from "Level 0" MaaS to a truly integrated system.</p>
+            <ul>
+              <li>Single unified payment card across all BTS/MRT/ARL/bus lines</li>
+              <li>Integrated journey planner app</li>
+              <li>Physical integration: covered walkways between transfer stations</li>
+              <li>Formalize motorcycle taxi integration as first/last-mile feeders</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot high">3</div>
+          <div class="timeline-content">
+            <div class="timeline-phase soon">Near-term (1-3 years)</div>
+            <h4>Implement Vehicle Demand Management <span class="severity sev-critical">High Priority</span></h4>
+            <p>Without demand management, rail expansion alone cannot reduce congestion.</p>
+            <ul>
+              <li>Phase in congestion pricing for downtown core (40-50 baht/entry)</li>
+              <li>Gradually increase parking fees in commercial centers</li>
+              <li>Introduce vehicle registration caps (Singapore COE model)</li>
+              <li>Expand the 20-baht fare to all lines</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot medium">4</div>
+          <div class="timeline-content">
+            <div class="timeline-phase soon">Near-term (1-3 years)</div>
+            <h4>Deploy Smart City Infrastructure <span class="severity sev-warning">Medium Priority</span></h4>
+            <p>Scale proven AI systems and build planning simulation capabilities.</p>
+            <ul>
+              <li>Expand AI traffic lights from 74 to 500+ intersections</li>
+              <li>Build a Bangkok Digital Twin for flood/traffic simulation</li>
+              <li>IoT sensor network for real-time flood monitoring</li>
+              <li>Smart energy management and air quality monitoring</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot medium">5</div>
+          <div class="timeline-content">
+            <div class="timeline-phase later">Medium-term (3-5 years)</div>
+            <h4>Execute Green Bangkok 2030 <span class="severity sev-warning">Medium Priority</span></h4>
+            <p>Close the gap from 1.47 m&sup2;/person to WHO-recommended 9 m&sup2;/person.</p>
+            <ul>
+              <li>Replace ineffective FAR bonuses with direct tax incentives</li>
+              <li>Build "15-minute pocket parks" on 124 identified sites (1.1M m&sup2;)</li>
+              <li>Design parks as dual-purpose flood retention infrastructure</li>
+              <li>Create green corridors along canal networks</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot long">6</div>
+          <div class="timeline-content">
+            <div class="timeline-phase later">Long-term (5-15 years)</div>
+            <h4>Transit-Oriented Development <span class="severity sev-info">Long-term</span></h4>
+            <p>Rebuild the inner city around transit nodes, following Singapore's TOD model.</p>
+            <ul>
+              <li>Zone for high-density mixed-use around rail stations</li>
+              <li>Pre-acquire land around future rail stations</li>
+              <li>Revitalize the inner city — reverse the "hollowing out" effect</li>
+              <li>Develop affordable housing near transit corridors</li>
+              <li>Integrate canal-based water transport</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <div class="rec-card">
-        <h4>3. Unify &amp; Expand the Transit System <span class="priority priority-high">High Priority</span></h4>
-        <p>Move from "Level 0" MaaS to a truly integrated system.</p>
-        <ul>
-          <li>Single unified payment card across all BTS/MRT/ARL/bus lines</li>
-          <li>Integrated journey planner app</li>
-          <li>Physical integration: covered walkways between transfer stations</li>
-          <li>Expand to cover all 50 districts</li>
-          <li>Formalize motorcycle taxi integration as first/last-mile feeders</li>
-        </ul>
-      </div>
-
-      <div class="rec-card">
-        <h4>4. Execute Green Bangkok 2030 <span class="priority priority-medium">Medium Priority</span></h4>
-        <p>Close the gap from 1.47 m&sup2;/person to the WHO-recommended 9 m&sup2;/person.</p>
-        <ul>
-          <li>Replace ineffective FAR bonuses with direct tax incentives</li>
-          <li>Build "15-minute pocket parks" on 124 identified sites</li>
-          <li>Design parks as dual-purpose flood retention infrastructure</li>
-          <li>Create green corridors along canal networks</li>
-        </ul>
-      </div>
-
-      <div class="rec-card">
-        <h4>5. Deploy Smart City Infrastructure <span class="priority priority-medium">Medium Priority</span></h4>
-        <p>Scale proven AI systems and build planning simulation capabilities.</p>
-        <ul>
-          <li>Expand AI traffic lights from 74 to 500+ intersections</li>
-          <li>Build a Bangkok Digital Twin for flood/traffic simulation</li>
-          <li>IoT sensor network for real-time flood monitoring</li>
-          <li>Smart energy management and air quality monitoring</li>
-        </ul>
-      </div>
-
-      <div class="rec-card">
-        <h4>6. Transit-Oriented Development <span class="priority priority-long">Long-term</span></h4>
-        <p>Rebuild the inner city around transit nodes, following Singapore\'s TOD model.</p>
-        <ul>
-          <li>Zone for high-density mixed-use around rail stations</li>
-          <li>Pre-acquire land around future rail stations</li>
-          <li>Revitalize the inner city — reverse the "hollowing out" effect</li>
-          <li>Develop affordable housing near transit corridors</li>
-          <li>Integrate canal-based water transport</li>
-        </ul>
-      </div>
-
-      <div class="callout callout-green" style="margin-top:32px;">
+      <div class="callout callout-green" style="margin-top:32px">
         <span class="callout-icon">&#9989;</span>
-        <div><strong>Bottom Line:</strong> Bangkok doesn\'t need more money — it needs better coordination. The city has ambitious plans (Green Bangkok 2030, M-Map rail expansion, Giant Tunnels). What\'s missing is the institutional architecture to make them work together. Singapore proved that when transport, land use, and green space planning are coordinated under a single vision, the results are transformative.</div>
+        <div><strong>Bottom Line:</strong> Bangkok doesn't need more money — it needs better coordination. The city has ambitious plans (Green Bangkok 2030, M-Map rail expansion, Giant Tunnels). What's missing is the institutional architecture to make them work together.</div>
       </div>
     </div>
 
     <div class="footer">
       <p>Research report compiled from 50+ academic and institutional sources.<br>
-      Generated for deep analysis of urban planning best practices and Bangkok\'s infrastructure future.</p>
+      Generated for deep analysis of urban planning best practices and Bangkok's infrastructure future.</p>
     </div>
   </div>
 </main>
@@ -1688,6 +1957,7 @@ tt.addEventListener('click', () => {
   document.documentElement.setAttribute('data-theme', n);
   localStorage.setItem('theme', n);
   tt.textContent = n === 'dark' ? '\u2600' : '\u263E';
+  updateCharts();
 });
 
 // Mobile menu
@@ -1751,52 +2021,242 @@ window.addEventListener('scroll', () => {
   pb.style.width = p + '%';
 });
 
-// Build dynamic nav from collapsibles
+// Build dynamic nav
 function buildDynamicNav() {
-  const part1 = document.getElementById('nav-part1');
-  const part2 = document.getElementById('nav-part2');
-  const part3 = document.getElementById('nav-part3');
+  ['nav-part1','#part1','part1','nav-part2','#part2','part2','nav-part3','#part3','part3'].reduce((acc, val, i, arr) => {
+    if (i % 3 === 0) return { containerId: val, sectionId: arr[i+1], sectionAttr: arr[i+2] };
+    return acc;
+  }, {});
 
-  document.querySelectorAll('#part1 .collapsible').forEach((c, i) => {
-    const h = c.querySelector('.collapsible-header span');
-    if (h) {
-      const a = document.createElement('a');
-      a.className = 'nav-link';
-      a.textContent = h.textContent;
-      a.href = '#part1';
-      a.setAttribute('data-section', 'part1');
-      a.addEventListener('click', () => c.scrollIntoView({ behavior: 'smooth' }));
-      part1.appendChild(a);
-    }
-  });
-
-  document.querySelectorAll('#part2 .collapsible').forEach((c, i) => {
-    const h = c.querySelector('.collapsible-header span');
-    if (h) {
-      const a = document.createElement('a');
-      a.className = 'nav-link';
-      a.textContent = h.textContent;
-      a.href = '#part2';
-      a.setAttribute('data-section', 'part2');
-      a.addEventListener('click', () => c.scrollIntoView({ behavior: 'smooth' }));
-      part2.appendChild(a);
-    }
-  });
-
-  document.querySelectorAll('#part3 .collapsible').forEach((c, i) => {
-    const h = c.querySelector('.collapsible-header span');
-    if (h) {
-      const a = document.createElement('a');
-      a.className = 'nav-link';
-      a.textContent = h.textContent;
-      a.href = '#part3';
-      a.setAttribute('data-section', 'part3');
-      a.addEventListener('click', () => c.scrollIntoView({ behavior: 'smooth' }));
-      part3.appendChild(a);
-    }
+  [['nav-part1','#part1','part1'],['nav-part2','#part2','part2'],['nav-part3','#part3','part3']].forEach(([containerId, sectionId, sectionAttr]) => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    document.querySelectorAll(sectionId + ' .collapsible').forEach(c => {
+      const h = c.querySelector('.collapsible-header > div > span');
+      if (h) {
+        const a = document.createElement('a');
+        a.className = 'nav-link';
+        a.textContent = h.textContent;
+        a.href = sectionId;
+        a.setAttribute('data-section', sectionAttr);
+        a.addEventListener('click', () => { c.scrollIntoView({ behavior: 'smooth' }); });
+        container.appendChild(a);
+      }
+    });
   });
 }
 buildDynamicNav();
+
+// ==================== CHARTS ====================
+const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+const textColor = () => isDark() ? '#f5f5f4' : '#1c1917';
+const mutedColor = () => isDark() ? '#a8a29e' : '#78716c';
+
+let charts = {};
+
+function createCharts() {
+  const gridColor = isDark() ? '#292524' : '#e7e5e4';
+
+  // Comparison Bar Chart
+  charts.comparison = new Chart(document.getElementById('chartComparison'), {
+    type: 'bar',
+    data: {
+      labels: ['Daily PT Ridership (M)', 'Rail Network (km)', 'Green Space (m²/person)', 'Vehicles/1000', 'Peak Speed (km/h)'],
+      datasets: [
+        { label: 'Singapore', data: [7.2, 230, 780, 60, 35], backgroundColor: '#15803d', borderRadius: 4 },
+        { label: 'Bangkok', data: [0.65, 109, 1.47, 566, 10.7], backgroundColor: '#ea580c', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: textColor(), font: { size: 12 } } } },
+      scales: {
+        x: { ticks: { color: mutedColor(), font: { size: 11 } }, grid: { color: gridColor } },
+        y: { ticks: { color: mutedColor() }, grid: { color: gridColor } }
+      }
+    }
+  });
+
+  // Modal Share Donut
+  charts.modal = new Chart(document.getElementById('chartModal'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Private Cars', 'Public Transit', 'Walking/Cycling', 'Motorcycle Taxi'],
+      datasets: [{
+        data: [68, 17, 5, 10],
+        backgroundColor: ['#dc2626', '#2563eb', '#15803d', '#ea580c'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom', labels: { color: textColor(), font: { size: 11 }, padding: 12 } }
+      },
+      cutout: '55%'
+    }
+  });
+
+  // Radar Chart - Governance
+  charts.radar = new Chart(document.getElementById('chartRadar'), {
+    type: 'radar',
+    data: {
+      labels: ['Long-term Planning', 'Agency Integration', 'Legal Enforcement', 'Public Engagement', 'Land Control', 'Implementation Speed'],
+      datasets: [
+        { label: 'Singapore', data: [9.5, 9, 9.5, 7, 9.5, 9], backgroundColor: 'rgba(21,128,61,0.2)', borderColor: '#15803d', borderWidth: 2, pointBackgroundColor: '#15803d' },
+        { label: 'Bangkok', data: [3, 2, 3, 4, 2, 3], backgroundColor: 'rgba(234,88,12,0.2)', borderColor: '#ea580c', borderWidth: 2, pointBackgroundColor: '#ea580c' }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: textColor(), font: { size: 11 } } } },
+      scales: {
+        r: {
+          ticks: { color: mutedColor(), backdropColor: 'transparent', font: { size: 10 } },
+          grid: { color: gridColor },
+          pointLabels: { color: mutedColor(), font: { size: 11 } },
+          suggestedMin: 0, suggestedMax: 10
+        }
+      }
+    }
+  });
+
+  // Cities Bar Chart
+  charts.cities = new Chart(document.getElementById('chartCities'), {
+    type: 'bar',
+    data: {
+      labels: ['Singapore', 'Copenhagen', 'Medellín', 'Barcelona', 'Seoul', 'Zürich', 'Rotterdam', 'Hamburg', 'Chicago'],
+      datasets: [
+        { label: 'Smart/Tech', data: [95, 85, 55, 70, 90, 75, 80, 70, 65], backgroundColor: '#2563eb', borderRadius: 3 },
+        { label: 'Green/Resilient', data: [90, 92, 75, 78, 70, 88, 90, 82, 72], backgroundColor: '#15803d', borderRadius: 3 },
+        { label: 'Human-Centric', data: [80, 88, 85, 82, 75, 85, 80, 75, 70], backgroundColor: '#7c3aed', borderRadius: 3 }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: { legend: { labels: { color: textColor(), font: { size: 11 } } } },
+      scales: {
+        x: { ticks: { color: mutedColor(), font: { size: 10 } }, grid: { color: gridColor }, max: 100 },
+        y: { ticks: { color: mutedColor(), font: { size: 11 } }, grid: { display: false } }
+      }
+    }
+  });
+
+  // Transport comparison
+  charts.transport = new Chart(document.getElementById('chartTransport'), {
+    type: 'bar',
+    data: {
+      labels: ['PT Modal Share', 'Rail km', 'Integration Score', 'Demand Mgmt', 'TOD Implementation'],
+      datasets: [
+        { label: 'Singapore', data: [85, 90, 95, 95, 92], backgroundColor: '#15803d', borderRadius: 4 },
+        { label: 'Bangkok', data: [17, 45, 15, 5, 30], backgroundColor: '#ea580c', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: textColor(), font: { size: 11 } } } },
+      scales: {
+        x: { ticks: { color: mutedColor(), font: { size: 10 } }, grid: { color: gridColor } },
+        y: { ticks: { color: mutedColor(), font: { size: 10 } }, grid: { color: gridColor }, max: 100, title: { display: true, text: 'Score (0-100)', color: mutedColor() } }
+      }
+    }
+  });
+
+  // Flood risk
+  charts.flood = new Chart(document.getElementById('chartFlood'), {
+    type: 'line',
+    data: {
+      labels: ['2000', '2010', '2020', '2030', '2050', '2080'],
+      datasets: [
+        { label: '% City Inundated', data: [5, 12, 22, 40, 60, 70], borderColor: '#dc2626', backgroundColor: 'rgba(220,38,38,0.1)', fill: true, tension: 0.4, pointRadius: 5, pointBackgroundColor: '#dc2626' },
+        { label: 'Subsidence (cm/yr)', data: [12, 8, 3, 2, 2, 1.5], borderColor: '#ea580c', borderDash: [5, 5], fill: false, tension: 0.4, pointRadius: 4, yAxisID: 'y1' },
+        { label: 'Sea Level Rise (mm/yr)', data: [2, 3, 4, 5, 6, 8], borderColor: '#2563eb', borderDash: [5, 5], fill: false, tension: 0.4, pointRadius: 4, yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: textColor(), font: { size: 11 } } } },
+      scales: {
+        x: { ticks: { color: mutedColor() }, grid: { color: gridColor } },
+        y: { ticks: { color: mutedColor() }, grid: { color: gridColor }, title: { display: true, text: '% Inundated', color: mutedColor() } },
+        y1: { position: 'right', ticks: { color: mutedColor() }, grid: { display: false }, title: { display: true, text: 'Rate (mm/cm/yr)', color: mutedColor() } }
+      }
+    }
+  });
+
+  // Economic impact
+  charts.econ = new Chart(document.getElementById('chartEcon'), {
+    type: 'bar',
+    data: {
+      labels: ['Congestion Cost', 'Road Fatalities', 'Air Pollution', 'Lost Productivity', 'Fuel Waste'],
+      datasets: [
+        { label: 'Billion Baht/Year', data: [300, 150, 25, 30, 6], backgroundColor: ['#dc2626', '#ea580c', '#f59e0b', '#2563eb', '#7c3aed'], borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: mutedColor(), font: { size: 11 } }, grid: { display: false } },
+        y: { ticks: { color: mutedColor(), font: { size: 10 } }, grid: { color: gridColor }, title: { display: true, text: 'Billion Baht/Year', color: mutedColor() } }
+      }
+    }
+  });
+
+  // Impact vs Effort scatter
+  charts.impact = new Chart(document.getElementById('chartImpact'), {
+    type: 'scatter',
+    data: {
+      datasets: [
+        { label: 'Integrated Authority', data: [{ x: 8, y: 95 }], backgroundColor: '#dc2626', pointRadius: 16, pointStyle: 'circle' },
+        { label: 'Vehicle Demand Mgmt', data: [{ x: 6, y: 85 }], backgroundColor: '#dc2626', pointRadius: 14, pointStyle: 'circle' },
+        { label: 'Unified Transit', data: [{ x: 7, y: 80 }], backgroundColor: '#dc2626', pointRadius: 14, pointStyle: 'circle' },
+        { label: 'Smart City Infra', data: [{ x: 5, y: 70 }], backgroundColor: '#ea580c', pointRadius: 12, pointStyle: 'circle' },
+        { label: 'Green Bangkok 2030', data: [{ x: 6, y: 60 }], backgroundColor: '#ea580c', pointRadius: 12, pointStyle: 'circle' },
+        { label: 'TOD', data: [{ x: 9, y: 75 }], backgroundColor: '#2563eb', pointRadius: 12, pointStyle: 'circle' }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { labels: { color: textColor(), font: { size: 10 } } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return ctx.dataset.label + ': Impact=' + ctx.raw.y + ', Effort=' + ctx.raw.x;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Implementation Effort (1-10)', color: mutedColor() }, ticks: { color: mutedColor() }, grid: { color: gridColor }, min: 0, max: 10 },
+        y: { title: { display: true, text: 'Expected Impact (0-100)', color: mutedColor() }, ticks: { color: mutedColor() }, grid: { color: gridColor }, min: 0, max: 100 }
+      }
+    }
+  });
+}
+
+function updateCharts() {
+  const tc = textColor();
+  const mc = mutedColor();
+  const gc = isDark() ? '#292524' : '#e7e5e4';
+  Object.values(charts).forEach(chart => {
+    if (chart.options.scales) {
+      Object.values(chart.options.scales).forEach(scale => {
+        if (scale.ticks) scale.ticks.color = mc;
+        if (scale.grid) scale.grid.color = gc;
+        if (scale.pointLabels) scale.pointLabels.color = mc;
+        if (scale.title) scale.title.color = mc;
+      });
+    }
+    if (chart.options.plugins.legend.labels) chart.options.plugins.legend.labels.color = tc;
+    chart.update();
+  });
+}
+
+// Initialize charts
+createCharts();
 </script>
 </body>
 </html>
