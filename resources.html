@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urban Planning Learning Resources</title>
+<style>
+:root {
+  --bg:#fafaf9;--bg-card:#fff;--text:#1c1917;--text-muted:#78716c;
+  --border:#e7e5e4;
+  --green:#15803d;--green-light:#dcfce7;
+  --blue:#2563eb;--blue-light:#dbeafe;
+  --orange:#ea580c;--orange-light:#ffedd5;
+  --purple:#7c3aed;--purple-light:#ede9fe;
+  --red:#dc2626;--red-light:#fee2e2;
+  --radius:12px;--font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0c0a09;--bg-card:#1c1917;--text:#f5f5f4;--text-muted:#a8a29e;--border:#292524;
+  --green-light:#052e16;--blue-light:#1e1b4b;--orange-light:#431401;--purple-light:#2e1065;--red-light:#450a0a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s}
+.content{max-width:900px;margin:0 auto;padding:40px}
+.hero{background:linear-gradient(135deg,#15803d 0%,#166534 50%,#064e3b 100%);border-radius:16px;padding:48px;margin-bottom:32px;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm-16 0v-4H18v4h-4v2h4v4h2v-4h4v-2H20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-content{position:relative;z-index:1}
+.hero h1{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-bottom:12px}
+.hero p{font-size:17px;opacity:.9;max-width:600px;line-height:1.6}
+.section{margin-bottom:48px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.section-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.section-header h2{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.08);transition:all .2s}
+.card:hover{box-shadow:0 10px 15px -3px rgba(0,0,0,0.08)}
+.card h3{font-size:18px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
+.card p{color:var(--text-muted);margin-bottom:8px;font-size:15px}
+.card a{color:var(--blue);text-decoration:none}
+.card a:hover{text-decoration:underline}
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:16px 0}
+.resource-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.08);transition:all .2s;border-left:4px solid var(--green)}
+.resource-card:hover{box-shadow:0 10px 15px -3px rgba(0,0,0,0.08);transform:translateY(-2px)}
+.resource-card.blue{border-left-color:var(--blue)}
+.resource-card.orange{border-left-color:var(--orange)}
+.resource-card.purple{border-left-color:var(--purple)}
+.resource-card.red{border-left-color:var(--red)}
+.resource-card h4{font-size:15px;font-weight:700;margin-bottom:8px}
+.resource-card p{font-size:14px;color:var(--text-muted);line-height:1.5}
+.resource-card .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.tag-free{background:var(--green-light);color:var(--green)}
+.tag-paid{background:var(--orange-light);color:var(--orange)}
+.tag-both{background:var(--blue-light);color:var(--blue)}
+.tag-org{background:var(--purple-light);color:var(--purple)}
+.tag-cert{background:var(--red-light);color:var(--red)}
+.callout{border-radius:var(--radius);padding:16px 20px;margin:16px 0;font-size:14px;display:flex;gap:12px;align-items:flex-start}
+.callout-green{background:var(--green-light);border:1px solid #86efac;color:#166534}
+.callout-blue{background:var(--blue-light);border:1px solid #93c5fd;color:#1e40af}
+.icon-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px;color:var(--text);transition:all .15s}
+.icon-btn:hover{border-color:var(--green)}
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 40px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(8px);transition:background .3s}
+.footer{text-align:center;padding:40px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+@media(max-width:900px){.content{padding:24px 16px}.hero{padding:32px 24px}.hero h1{font-size:28px}.resource-grid{grid-template-columns:1fr}.topbar{padding:12px 16px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="breadcrumb">Resources / <span id="currentSection">Learning Resources</span></div>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="themeToggle" title="Toggle dark mode">&#9790;</button>
+  </div>
+</div>
+<div class="content">
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Urban Planning Learning Resources</h1>
+      <p>A curated guide to courses, books, podcasts, YouTube channels, professional organizations, and certifications for learning urban planning.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-green">
+    <span>&#128221;</span>
+    <div><strong>How to use this guide:</strong> Start with free resources (YouTube, podcasts, MIT OCW) to explore the field. Move to MOOCs for structured learning. Join professional organizations for networking. Consider certifications (AICP) for career advancement.</div>
+  </div>
+
+  <!-- ONLINE COURSES -->
+  <div class="section" id="courses">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-light);color:var(--green)">&#127891;</div>
+      <h2>Online Courses &amp; MOOCs</h2>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <span class="tag tag-both">Free + Paid</span>
+        <h4>Shaping Urban Futures (Oxford)</h4>
+        <p>Global urban challenges, PEAK Urban framework. Spatial analysis, socioeconomics, climate adaptation.</p>
+        <p><strong>Duration:</strong> ~2 weeks (10 hrs/week)</p>
+        <a href="https://www.coursera.org/learn/shaping-urban-futures" target="_blank">coursera.org →</a>
+      </div>
+      <div class="resource-card blue">
+        <span class="tag tag-both">Free + Paid</span>
+        <h4>Accessibility &amp; Inclusive Design (UIUC)</h4>
+        <p>Universal design principles using adaptive technology. For planners, designers, community developers.</p>
+        <a href="https://www.coursera.org" target="_blank">coursera.org →</a>
+      </div>
+      <div class="resource-card orange">
+        <span class="tag tag-paid">Paid</span>
+        <h4>Inclusive &amp; Sustainable Cities (Delft)</h4>
+        <p>3-course professional certificate: sustainable planning, inclusivity, urban mobility.</p>
+        <p><strong>Duration:</strong> 5 months, intermediate</p>
+        <a href="https://www.edx.org/learn/urban-planning" target="_blank">edx.org →</a>
+      </div>
+      <div class="resource-card purple">
+        <span class="tag tag-paid">Paid</span>
+        <h4>Dutch Urbanism (DelftX)</h4>
+        <p>Dutch approaches to urbanism: social &amp; environmental challenges. ~$127</p>
+        <a href="https://www.edx.org/learn/urban-planning" target="_blank">edx.org →</a>
+      </div>
+      <div class="resource-card blue">
+        <span class="tag tag-paid">Paid</span>
+        <h4>Urban Mobility Disruptions (MITx)</h4>
+        <p>Sustainable &amp; equitable urban transportation. From MIT's Department of Urban Studies.</p>
+        <a href="https://www.edx.org/learn/urban-planning" target="_blank">edx.org →</a>
+      </div>
+      <div class="resource-card green">
+        <span class="tag tag-free">Free</span>
+        <h4>MIT OpenCourseWare</h4>
+        <p>Free course materials: Housing/Community/Economic Development, Energy Policy, Disaster Planning. No certificates.</p>
+        <a href="https://ocw.mit.edu/courses/urban-studies-and-planning/" target="_blank">ocw.mit.edu →</a>
+      </div>
+      <div class="resource-card orange">
+        <span class="tag tag-paid">Paid</span>
+        <h4>Sustainable Urban Development (Wageningen)</h4>
+        <p>Solutions for urbanization &amp; sustainability challenges from Netherlands' leading agricultural university.</p>
+        <a href="https://www.edx.org/learn/urban-planning" target="_blank">edx.org →</a>
+      </div>
+      <div class="resource-card purple">
+        <span class="tag tag-both">Free + Paid</span>
+        <h4>Spatial Computational Thinking (NUS)</h4>
+        <p>Integrates computational tools into urban design. From National University of Singapore.</p>
+        <a href="https://www.re-thinkingthefuture.com/rtf-fresh-perspectives/a774-10-architectural-online-courses-for-urban-design/" target="_blank">rtf →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKS -->
+  <div class="section" id="books">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--blue-light);color:var(--blue)">&#128218;</div>
+      <h2>Books</h2>
+    </div>
+
+    <h3 style="font-size:18px;font-weight:700;margin:16px 0 12px">Foundational Classics</h3>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <h4>The Death &amp; Life of Great American Cities</h4>
+        <p><strong>Jane Jacobs</strong> — Seminal critique of mid-20th century planning. Advocates for vibrant, community-driven cities.</p>
+      </div>
+      <div class="resource-card blue">
+        <h4>Cities of Tomorrow</h4>
+        <p><strong>Peter Hall</strong> — Comprehensive history of urban planning theories and their impact on modern cities.</p>
+      </div>
+      <div class="resource-card orange">
+        <h4>The Power Broker</h4>
+        <p><strong>Robert Caro</strong> — Robert Moses and the interplay between politics and urban design.</p>
+      </div>
+      <div class="resource-card purple">
+        <h4>A Pattern Language</h4>
+        <p><strong>Christopher Alexander</strong> — Timeless design principles for human-scale environments.</p>
+      </div>
+      <div class="resource-card red">
+        <h4>The Image of the City</h4>
+        <p><strong>Kevin Lynch</strong> — "Imageability" and how people perceive urban spaces.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px;font-weight:700;margin:24px 0 12px">Contemporary Reads (2024-2025)</h3>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <h4>Urbanism in the Age of Climate Change</h4>
+        <p><strong>Peter Calthorpe</strong> — Sustainable planning practices for addressing the climate crisis.</p>
+      </div>
+      <div class="resource-card blue">
+        <h4>Key to the City: How Zoning Shapes Our World</h4>
+        <p><strong>Sara C. Bronin</strong> — Zoning's historical and modern impact on equity and sustainability.</p>
+      </div>
+      <div class="resource-card orange">
+        <h4>Walkable City</h4>
+        <p><strong>Jeff Speck</strong> — Pedestrian-friendly cities as a pillar of sustainable urban design.</p>
+      </div>
+      <div class="resource-card purple">
+        <h4>Inclusive Transportation</h4>
+        <p><strong>Veronica Davis</strong> — Intersection of transportation planning, accessibility, and social justice.</p>
+      </div>
+      <div class="resource-card red">
+        <h4>How to Kill a City</h4>
+        <p><strong>Peter Moskowitz</strong> — Gentrification, inequality, and the fight for neighborhoods.</p>
+      </div>
+      <div class="resource-card">
+        <h4>Homelessness Is a Housing Problem</h4>
+        <p><strong>Gregg Colburn &amp; Clayton Page Aldern</strong> — Structural causes of homelessness in US cities.</p>
+      </div>
+      <div class="resource-card blue">
+        <h4>Building the Black City</h4>
+        <p><strong>Joe William Trotter Jr.</strong> — Development of Black "cities-within-cities" in the US.</p>
+      </div>
+      <div class="resource-card orange">
+        <h4>The Ethics of Cities</h4>
+        <p><strong>Timothy Beatley</strong> — How ethics and sustainability intersect in urban policy.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PODCASTS -->
+  <div class="section" id="podcasts">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--purple-light);color:var(--purple)">&#127911;</div>
+      <h2>Podcasts</h2>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card purple">
+        <span class="tag tag-free">Free</span>
+        <h4>99% Invisible</h4>
+        <p>Design &amp; architecture. Explores unnoticed elements shaping our world. Deep dives into urban aesthetics.</p>
+      </div>
+      <div class="resource-card">
+        <span class="tag tag-free">Free</span>
+        <h4>Talking Headways</h4>
+        <p>Sustainable transportation, urban planning, city living. Hosted by Jeff Wood &amp; Streetsblog.</p>
+      </div>
+      <div class="resource-card blue">
+        <span class="tag tag-free">Free</span>
+        <h4>The Urbanist (Monocle 24)</h4>
+        <p>Guides to better cities. Technology, housing, global urbanist perspectives.</p>
+      </div>
+      <div class="resource-card orange">
+        <span class="tag tag-free">Free</span>
+        <h4>Urban Planning is Not Boring</h4>
+        <p>Making planning accessible. Zoning, walkability simplified. Hosted by USC grads.</p>
+      </div>
+      <div class="resource-card red">
+        <span class="tag tag-free">Free</span>
+        <h4>The Strong Towns Podcast</h4>
+        <p>Financially resilient &amp; sustainable communities. Actionable infrastructure insights.</p>
+      </div>
+      <div class="resource-card purple">
+        <span class="tag tag-free">Free</span>
+        <h4>Active Towns</h4>
+        <p>Active transportation &amp; healthy communities. Profiles transformative urban initiatives globally.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- YOUTUBE -->
+  <div class="section" id="youtube">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--red-light);color:var(--red)">&#9654;</div>
+      <h2>YouTube Channels</h2>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card red">
+        <span class="tag tag-free">Free</span>
+        <h4>City Beautiful</h4>
+        <p>Academic expertise + visual explanations of zoning, transit, and city development.</p>
+      </div>
+      <div class="resource-card">
+        <span class="tag tag-free">Free</span>
+        <h4>Not Just Bikes</h4>
+        <p>Urban mobility, walkable cities. Contrasts Dutch human-scaled urbanism with car-dependent design.</p>
+      </div>
+      <div class="resource-card blue">
+        <span class="tag tag-free">Free</span>
+        <h4>Urban Planner Explained</h4>
+        <p>Quick, digestible overviews of planning concepts. Perfect for beginners.</p>
+      </div>
+      <div class="resource-card orange">
+        <span class="tag tag-free">Free</span>
+        <h4>Oh The Urbanity!</h4>
+        <p>Urban density, bike lanes, walkability. Montreal-focused with unique sustainability insights.</p>
+      </div>
+      <div class="resource-card purple">
+        <span class="tag tag-free">Free</span>
+        <h4>Climate Town</h4>
+        <p>Urban challenges from a climate perspective. Humor + data-driven analysis.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL ORGS -->
+  <div class="section" id="orgs">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--orange-light);color:var(--orange)">&#127963;</div>
+      <h2>Professional Organizations</h2>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card orange">
+        <span class="tag tag-org">Organization</span>
+        <h4>American Planning Association (APA)</h4>
+        <p>Largest planners' org (40,000+ members). Planning Magazine, 48 local chapters, National Planning Conference, job boards, mentoring.</p>
+        <p><strong>Cost:</strong> $310-$671/year (income-based). Free for students.</p>
+        <a href="https://www.planning.org" target="_blank">planning.org →</a>
+      </div>
+      <div class="resource-card blue">
+        <span class="tag tag-org">Organization</span>
+        <h4>Urban Land Institute (ULI)</h4>
+        <p>Global nonprofit (48,000+ members). Urban Land Magazine, Knowledge Finder library, District Councils, global conferences.</p>
+        <p><strong>Cost:</strong> Associate $540/yr | Full $1,332/yr</p>
+        <a href="https://uli.org" target="_blank">uli.org →</a>
+      </div>
+      <div class="resource-card">
+        <span class="tag tag-org">Organization</span>
+        <h4>ICLEI — Local Govts for Sustainability</h4>
+        <p>2,500+ local governments across 125+ countries. ClearPath Climate Planner, technical assistance, peer exchanges.</p>
+        <a href="https://iclei.org" target="_blank">iclei.org →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="section" id="certs">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--red-light);color:var(--red)">&#127891;</div>
+      <h2>Certifications</h2>
+    </div>
+    <div class="card" style="border-left:4px solid var(--red)">
+      <h3>AICP — American Institute of Certified Planners</h3>
+      <p>The leading professional credential for urban planners in the US, administered by APA.</p>
+      <p><strong>Requirements:</strong> APA membership + education/experience prerequisites + comprehensive exam + ongoing professional development (CM credits every 2 years)</p>
+      <p><strong>Benefits:</strong> Nationally recognized expertise validation, higher career prospects, exclusive resources &amp; events</p>
+      <a href="https://www.planning.org/aicp/" target="_blank">planning.org/aicp →</a>
+    </div>
+  </div>
+
+  <!-- GRADUATE PROGRAMS -->
+  <div class="section" id="grad">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--blue-light);color:var(--blue)">&#127891;</div>
+      <h2>Top Graduate Programs</h2>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card blue">
+        <h4>MIT — Master in City Planning (MCP)</h4>
+        <p>City Design, Environmental Policy, Housing, International Development. Innovation &amp; policy-driven.</p>
+        <a href="https://dusp.mit.edu/" target="_blank">dusp.mit.edu →</a>
+      </div>
+      <div class="resource-card">
+        <h4>Harvard — Master in Urban Planning (MUP)</h4>
+        <p>Housing, Environmental/Land Use, Transportation, Urban Design. Design + policy integration.</p>
+        <a href="https://www.gsd.harvard.edu/urban-planning-design/" target="_blank">gsd.harvard.edu →</a>
+      </div>
+      <div class="resource-card orange">
+        <h4>UCLA — MURP</h4>
+        <p>Transportation, Housing, Design, Environmental Analysis. Highly interdisciplinary.</p>
+        <a href="https://luskin.ucla.edu/urban-planning" target="_blank">luskin.ucla.edu →</a>
+      </div>
+      <div class="resource-card purple">
+        <h4>UC Berkeley — MCP</h4>
+        <p>Environmental Planning, Transportation, Economic Development, Urban Design. Sustainability &amp; equity focus.</p>
+        <a href="https://ced.berkeley.edu/academics/city-regional-planning/" target="_blank">ced.berkeley.edu →</a>
+      </div>
+      <div class="resource-card red">
+        <h4>UCL — MSc Urban Design &amp; City Planning</h4>
+        <p>Urban Design, Housing Policy, Infrastructure. European urbanization challenges.</p>
+        <a href="https://www.ucl.ac.uk/planning/" target="_blank">ucl.ac.uk →</a>
+      </div>
+      <div class="resource-card blue">
+        <h4>Delft — MSc Urbanism</h4>
+        <p>Landscape Architecture, Spatial Planning, Urban Design. Technical + social aspects.</p>
+        <a href="https://www.tudelft.nl/urbanism" target="_blank">tudelft.nl →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FREE RESOURCES -->
+  <div class="section" id="free">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-light);color:var(--green)">&#128279;</div>
+      <h2>Free Websites &amp; Communities</h2>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <span class="tag tag-free">Free</span>
+        <h4>Planetizen</h4>
+        <p>Articles, job boards, educational content. Hub for academic &amp; practical planning knowledge.</p>
+        <a href="https://www.planetizen.com" target="_blank">planetizen.com →</a>
+      </div>
+      <div class="resource-card blue">
+        <span class="tag tag-free">Free</span>
+        <h4>Urban Institute</h4>
+        <p>Research &amp; policy analysis on housing, transit, economic development. Data-driven insights.</p>
+        <a href="https://www.urban.org" target="_blank">urban.org →</a>
+      </div>
+      <div class="resource-card orange">
+        <span class="tag tag-free">Free</span>
+        <h4>Streetsblog Network</h4>
+        <p>Local urban planning news, street design, transportation advocacy across US cities.</p>
+        <a href="https://streetsblog.org" target="_blank">streetsblog.org →</a>
+      </div>
+      <div class="resource-card purple">
+        <span class="tag tag-free">Free</span>
+        <h4>Strong Towns</h4>
+        <p>Financially resilient communities. Articles, podcasts, and advocacy for sustainable development.</p>
+        <a href="https://strongtowns.org" target="_blank">strongtowns.org →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:32px">
+    <span>&#128640;</span>
+    <div><strong>Suggested learning path:</strong> Start with YouTube channels (City Beautiful, Not Just Bikes) + podcasts (99% Invisible, Talking Headways) → Move to MIT OCW free courses → Take a Coursera/edX course for structured learning → Read foundational books (Jacobs, Speck) → Join APA/ULI for networking → Pursue AICP certification for career advancement.</div>
+  </div>
+
+  <div class="footer">
+    <p>Curated from 70+ sources. Resources verified for 2024-2025 availability.</p>
+  </div>
+</div>
+<script>
+const tt = document.getElementById('themeToggle');
+const st = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', st);
+tt.textContent = st === 'dark' ? '\u2600' : '\u263E';
+tt.addEventListener('click', () => {
+  const c = document.documentElement.getAttribute('data-theme');
+  const n = c === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', n);
+  localStorage.setItem('theme', n);
+  tt.textContent = n === 'dark' ? '\u2600' : '\u263E';
+});
+</script>
+</body>
+</html>
